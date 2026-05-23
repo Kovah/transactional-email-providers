@@ -17,6 +17,20 @@ const locations = ['EU', 'US', 'UK', 'CA', 'Global'];
     />
   </div>
 
+  <div>
+    <label class="mb-1.5 block font-mono text-xs tracking-widest text-[#5a4d08] dark:text-[#ffd84d]">MY VOLUME / MO</label>
+    <input
+      type="text"
+      inputmode="numeric"
+      x-model="currentVolume"
+      placeholder="e.g. 8,000"
+      class="w-full border border-[#b9b7ae] bg-[#f8f7f2] px-2.5 py-2 font-mono text-sm text-[#171717] placeholder-[#6f6b60] transition-colors outline-none focus:border-[#b38f00] dark:border-[#3e3e44] dark:bg-[#111114] dark:text-[#f3f3ee] dark:placeholder-[#8a8a92] dark:focus:border-[#ffd600]"
+    />
+    <p class="mt-1 text-xs text-[#666056] dark:text-[#a7a7af]">
+      Sorts the list by the cheapest applicable option for your monthly volume.
+    </p>
+  </div>
+
   {/* Location chips */}
   <div>
     <label class="mb-1.5 block font-mono text-xs tracking-widest text-[#5a4d08] dark:text-[#ffd84d]">LOCATION</label>

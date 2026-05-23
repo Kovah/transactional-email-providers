@@ -59,6 +59,7 @@ const { title = 'Transactional Email Providers' } = Astro.props;
 
             // Filter state
             search: '',
+            currentVolume: '',
             locations: [],
             filterFreePlan: false,
             filterPayAsYouGo: false,
@@ -110,7 +111,18 @@ const { title = 'Transactional Email Providers' } = Astro.props;
                 if (this.sortBy === 'name') {
                   cmp = a.name.localeCompare(b.name);
                 } else if (this.sortBy === 'rate') {
-                  cmp = this.bestPlan(a).costPerEmail - this.bestPlan(b).costPerEmail;
+                  if (this.currentVolumeValue !== null) {
+                    const costDiff = this.selectedMonthlyCost(a) - this.selectedMonthlyCost(b);
+                    if (costDiff !== 0) {
+                      cmp = costDiff;
+                    } else {
+                      const volumeDiff = this.selectedPlan(a).volume - this.selectedPlan(b).volume;
+                      const rateDiff = this.selectedPlan(a).costPerEmail - this.selectedPlan(b).costPerEmail;
+                      cmp = volumeDiff || rateDiff || a.name.localeCompare(b.name);
+                    }
+                  } else {
+                    cmp = this.selectedPlan(a).costPerEmail - this.selectedPlan(b).costPerEmail;
+                  }
                 } else if (this.sortBy === 'freeQuota') {
                   const aQuota = extractFreeQuota(a);
                   const bQuota = extractFreeQuota(b);
@@ -123,12 +135,20 @@ const { title = 'Transactional Email Providers' } = Astro.props;
             get hasActiveFilters() {
               return (
                 this.search.trim() !== '' ||
+                this.currentVolumeValue !== null ||
                 this.locations.length > 0 ||
                 this.filterFreePlan ||
                 this.filterPayAsYouGo ||
                 this.filterMarketingAllowed ||
                 this.filterNoVerification
               );
+            },
+
+            get currentVolumeValue() {
+              const raw = String(this.currentVolume ?? '').replaceAll(',', '').trim();
+              if (raw === '') return null;
+              const value = Number(raw);
+              return Number.isFinite(value) && value > 0 ? Math.round(value) : null;
             },
 
             toggleLocation(loc) {
@@ -141,6 +161,7 @@ const { title = 'Transactional Email Providers' } = Astro.props;
 
             resetFilters() {
               this.search = '';
+              this.currentVolume = '';
               this.locations = [];
               this.filterFreePlan = false;
               this.filterPayAsYouGo = false;
@@ -158,17 +179,87 @@ const { title = 'Transactional Email Providers' } = Astro.props;
               }, provider.plans[0]);
             },
 
+            estimatePlanCost(provider, plan, volume) {
+              if (volume === null) return plan.costPerMonth;
+
+              if (provider.payAsYouGo && plan.costPerMonth === 0 && !plan.extra) {
+                return volume * plan.costPerEmail;
+              }
+
+              if (volume <= plan.volume) {
+                return plan.costPerMonth;
+              }
+
+              if (plan.extra && plan.extra.blockSize && plan.extra.costPerBlock !== null) {
+                const extraUnits = Math.ceil((volume - plan.volume) / plan.extra.blockSize);
+                return plan.costPerMonth + extraUnits * plan.extra.costPerBlock;
+              }
+
+              return Number.POSITIVE_INFINITY;
+            },
+
+            selectedPlan(provider) {
+              const volume = this.currentVolumeValue;
+              if (volume === null) return this.bestPlan(provider);
+
+              return provider.plans.reduce((best, plan) => {
+                const bestCost = this.estimatePlanCost(provider, best, volume);
+                const planCost = this.estimatePlanCost(provider, plan, volume);
+
+                if (planCost < bestCost) return plan;
+                if (planCost > bestCost) return best;
+                if (plan.volume < best.volume) return plan;
+                if (plan.volume > best.volume) return best;
+                return plan.costPerEmail < best.costPerEmail ? plan : best;
+              }, provider.plans[0]);
+            },
+
+            selectedMonthlyCost(provider) {
+              return this.estimatePlanCost(provider, this.selectedPlan(provider), this.currentVolumeValue);
+            },
+
             formatEmailRate(rate) {
               if (rate === null || rate === undefined) return '—';
               return `$${rate.toFixed(5)}/email`;
             },
 
+            formatUsd(amount) {
+              if (!Number.isFinite(amount)) return 'Not available';
+              return `$${amount.toFixed(amount < 10 ? 2 : 2)}`;
+            },
+
+            formatCurrentVolumeBadge() {
+              if (this.currentVolumeValue === null) return '';
+              return `USING ${this.currentVolumeValue.toLocaleString()}/MO`;
+            },
+
             formatTierContext(provider) {
-              const plan = this.bestPlan(provider);
+              const plan = this.selectedPlan(provider);
+              if (this.currentVolumeValue !== null) {
+                if (provider.payAsYouGo && plan.costPerMonth === 0 && !plan.extra) {
+                  return `${this.currentVolumeValue.toLocaleString()}/mo pay as you go`;
+                }
+                return `${this.currentVolumeValue.toLocaleString()}/mo on ${plan.volume.toLocaleString()} plan`;
+              }
               if (provider.payAsYouGo && plan.costPerMonth === 0) {
                 return 'pay as you go';
               }
               return `best at ${plan.volume.toLocaleString()} emails/mo`;
+            },
+
+            formatPrimaryPrice(provider) {
+              if (this.currentVolumeValue !== null) {
+                return `${this.formatUsd(this.selectedMonthlyCost(provider))}/mo`;
+              }
+              return this.formatEmailRate(this.selectedPlan(provider).costPerEmail);
+            },
+
+            formatSecondaryPrice(provider) {
+              const plan = this.selectedPlan(provider);
+              if (this.currentVolumeValue !== null) {
+                return this.formatEmailRate(plan.costPerEmail);
+              }
+              return this.formatTierContext(provider);
             },
 
             formatMonthlyCommitment(plan) {

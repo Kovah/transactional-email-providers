@@ -6,9 +6,17 @@
 <div class="flex-1">
   {/* Sort bar */}
   <div class="sticky top-0 z-10 flex items-center justify-between gap-4 border-b border-[#e8e8e0] bg-[#eeeeea] px-4 py-2.5 dark:border-[#222226] dark:bg-[#16161a]">
-    <span class="font-mono text-xs tracking-widest text-[#5a4d08] dark:text-[#c0c0c8]">
-      <span x-text="filtered.length"></span> / <span x-text="allProviders.length"></span> PROVIDERS
-    </span>
+    <div class="flex items-center gap-2">
+      <span class="font-mono text-xs tracking-widest text-[#5a4d08] dark:text-[#c0c0c8]">
+        <span x-text="filtered.length"></span> / <span x-text="allProviders.length"></span> PROVIDERS
+      </span>
+      <span
+        x-show="currentVolumeValue !== null"
+        style="display: none;"
+        class="rounded border border-[#b38f00]/40 bg-[#fff5bf] px-2 py-0.5 font-mono text-[10px] tracking-widest text-[#6a5600] dark:border-[#ffd600]/30 dark:bg-[#2a250f] dark:text-[#ffd84d]"
+        x-text="formatCurrentVolumeBadge()"
+      ></span>
+    </div>
 
     <div class="flex items-center gap-1">
       <span class="mr-1 font-mono text-xs text-[#4c473f] dark:text-[#a8a8b1]">SORT</span>
@@ -92,7 +100,8 @@
                 </div>
 
                 <div class="shrink-0 text-right font-mono text-sm text-[#45413a] dark:text-[#c4c4cc]">
-                  <div class="font-semibold text-[#2f2b25] dark:text-[#f0f0ea]" x-text="formatEmailRate(bestPlan(provider).costPerEmail)"></div>
+                  <div class="font-semibold text-[#2f2b25] dark:text-[#f0f0ea]" x-text="formatPrimaryPrice(provider)"></div>
+                  <div x-show="currentVolumeValue !== null" style="display: none;" class="text-xs text-[#666056] dark:text-[#a7a7af]" x-text="formatSecondaryPrice(provider)"></div>
                   <div class="text-xs text-[#666056] dark:text-[#a7a7af]" x-text="formatTierContext(provider)"></div>
                 </div>
 
@@ -158,7 +167,7 @@
                   <tbody>
                     <template x-for="(plan, i) in provider.plans" :key="i">
                       <tr
-                        :class="bestPlan(provider).costPerEmail === plan.costPerEmail ? 'bg-[#fff8d6]/55 dark:bg-[#2a250f]/30' : ''"
+                        :class="selectedPlan(provider) === plan ? 'bg-[#fff8d6]/55 dark:bg-[#2a250f]/30' : ''"
                         class="border-b border-[#f0f0e8] text-[#4a463f] dark:border-[#1e1e22] dark:text-[#bdbdc5]"
                       >
                         <td class="py-1.5 pr-4 text-[#6b5e0a] dark:text-[#FFD600]" x-text="formatEmailRate(plan.costPerEmail)"></td>

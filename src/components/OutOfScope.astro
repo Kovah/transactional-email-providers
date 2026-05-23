@@ -3,53 +3,34 @@
 // Reads outOfScope from parent Alpine providerApp scope.
 ---
 
-<div x-data="{ open: false }" class="border-t border-[#e8e8e0] dark:border-[#222226] mt-4">
-  <button
-    @click="open = !open"
-    :aria-expanded="open"
-    class="w-full flex items-center justify-between px-4 py-3 text-left hover:bg-[#f5f5f0] dark:hover:bg-[#16161a] transition-colors group"
-  >
-    <span class="font-mono text-xs tracking-widest text-[#4f4a43] group-hover:text-[#222] dark:text-[#b3b3bc] dark:group-hover:text-[#ecece6]">
-      WHY ARE SOME PROVIDERS NOT LISTED?
-      <span class="ml-1 text-[#676158] dark:text-[#9696a0]" x-text="`(${outOfScope.length} excluded)`"></span>
-    </span>
-    <span
-      :class="open ? 'rotate-180 text-[#FFD600]' : 'text-[#5a554c] dark:text-[#a4a4ad]'"
-      class="font-mono text-xs transition-transform"
-    >▾</span>
-  </button>
-
-  <div
-    x-show="open"
-    x-transition:enter="transition ease-out duration-150"
-    x-transition:enter-start="opacity-0"
-    x-transition:enter-end="opacity-100"
-    x-transition:leave="transition ease-in duration-100"
-    x-transition:leave-start="opacity-100"
-    x-transition:leave-end="opacity-0"
-    class="px-4 pb-6"
-    style="display: none;"
-  >
-    <p class="mb-3 font-mono text-sm text-[#575249] dark:text-[#b7b7bf]">
-      These providers were evaluated but excluded because they do not meet the criteria for transactional email tools.
-    </p>
-    <div class="overflow-x-auto">
-      <table class="w-full text-sm font-mono border-collapse">
-        <thead>
-          <tr class="border-b border-[#e0e0d8] text-[#575249] dark:border-[#222] dark:text-[#b6b6be]">
-            <th class="text-left py-1 pr-6">Provider</th>
-            <th class="text-left py-1">Reason for exclusion</th>
-          </tr>
-        </thead>
-        <tbody>
-          <template x-for="item in outOfScope" :key="item.name">
-            <tr class="border-b border-[#f0f0e8] dark:border-[#1e1e22]">
-              <td class="py-1.5 pr-6 text-[#3f3b35] dark:text-[#e1e1da]" x-text="item.name"></td>
-              <td class="py-1.5 text-[#575249] dark:text-[#b7b7bf]" x-text="item.reason"></td>
-            </tr>
-          </template>
-        </tbody>
-      </table>
-    </div>
+<section class="mt-4 border-t border-[#e8e8e0] px-4 py-6 dark:border-[#222226]">
+  <div class="mb-3 flex items-baseline justify-between gap-3">
+    <h2 class="font-mono text-sm font-bold text-[#4f4a43] dark:text-[#b3b3bc]">
+      Why are some Providers not listed?
+    </h2>
+    <span class="font-mono text-xs text-[#676158] dark:text-[#9696a0]" x-text="`${outOfScope.length} excluded`"></span>
   </div>
-</div>
+
+  <p class="mb-3 font-mono text-xs text-[#575249] dark:text-[#b7b7bf]">
+    These providers were evaluated but excluded because they do not meet the criteria for transactional email tools.
+  </p>
+
+  <div class="overflow-x-auto">
+    <table class="w-full border-collapse font-mono text-xs">
+      <thead>
+        <tr class="border-b border-[#e0e0d8] text-[#575249] dark:border-[#222] dark:text-[#b6b6be]">
+          <th class="text-left py-1 pr-6">Provider</th>
+          <th class="text-left py-1">Reason for exclusion</th>
+        </tr>
+      </thead>
+      <tbody>
+        <template x-for="item in outOfScope" :key="item.name">
+          <tr class="border-b border-[#f0f0e8] dark:border-[#1e1e22]">
+            <td class="py-1.5 pr-6 text-[#3f3b35] dark:text-[#e1e1da]" x-text="item.name"></td>
+            <td class="py-1.5 text-[#575249] dark:text-[#b7b7bf]" x-text="item.reason"></td>
+          </tr>
+        </template>
+      </tbody>
+    </table>
+  </div>
+</section>

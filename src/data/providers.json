@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2025-12-02",
+  "lastUpdated": "2026-05-23",
   "providers": [
     {
       "name": "AHA Send",
@@ -74,6 +74,36 @@
           "costPerMonth": 0.00,
           "costPerEmail": 0.00020,
           "extra": null
+        },
+        {
+          "volume": 250000,
+          "costPerMonth": 0.00,
+          "costPerEmail": 0.00018,
+          "extra": null
+        },
+        {
+          "volume": 500000,
+          "costPerMonth": 0.00,
+          "costPerEmail": 0.00016,
+          "extra": null
+        },
+        {
+          "volume": 1000000,
+          "costPerMonth": 0.00,
+          "costPerEmail": 0.00014,
+          "extra": null
+        },
+        {
+          "volume": 2500000,
+          "costPerMonth": 0.00,
+          "costPerEmail": 0.00012,
+          "extra": null
+        },
+        {
+          "volume": 5000000,
+          "costPerMonth": 0.00,
+          "costPerEmail": 0.00010,
+          "extra": null
         }
       ],
       "marketingAllowed": null,
@@ -113,7 +143,19 @@
           "volume": 25000,
           "costPerMonth": 20.00,
           "costPerEmail": 0.00080,
-          "extra": { "blockSize": 10000, "costPerBlock": 20.00, "costPerEmail": 0.00200 }
+          "extra": { "blockSize": 25000, "costPerBlock": 20.00, "costPerEmail": 0.00080 }
+        },
+        {
+          "volume": 500000,
+          "costPerMonth": 400.00,
+          "costPerEmail": 0.00080,
+          "extra": { "blockSize": 25000, "costPerBlock": 20.00, "costPerEmail": 0.00080 }
+        },
+        {
+          "volume": 1000000,
+          "costPerMonth": 800.00,
+          "costPerEmail": 0.00080,
+          "extra": { "blockSize": 25000, "costPerBlock": 20.00, "costPerEmail": 0.00080 }
         }
       ],
       "marketingAllowed": null,
@@ -206,6 +248,12 @@
           "costPerMonth": 7.60,
           "costPerEmail": 0.00076,
           "extra": { "blockSize": 10000, "costPerBlock": 7.60, "costPerEmail": 0.00076 }
+        },
+        {
+          "volume": 10000,
+          "costPerMonth": 10.00,
+          "costPerEmail": 0.00100,
+          "extra": { "blockSize": 10000, "costPerBlock": 10.00, "costPerEmail": 0.00100 }
         }
       ],
       "marketingAllowed": null,
@@ -218,7 +266,7 @@
       "url": "https://mailtrap.io/",
       "location": "US",
       "freePlan": true,
-      "freeLimits": "1,000/mo",
+      "freeLimits": "4,000/mo",
       "payAsYouGo": false,
       "plans": [
         {
@@ -228,10 +276,16 @@
           "extra": { "blockSize": 1000, "costPerBlock": 1.00, "costPerEmail": 0.00100 }
         },
         {
-          "volume": 50000,
-          "costPerMonth": 20.00,
-          "costPerEmail": 0.00040,
-          "extra": null
+          "volume": 100000,
+          "costPerMonth": 85.00,
+          "costPerEmail": 0.00085,
+          "extra": { "blockSize": 1000, "costPerBlock": 0.88, "costPerEmail": 0.00088 }
+        },
+        {
+          "volume": 1500000,
+          "costPerMonth": 750.00,
+          "costPerEmail": 0.00050,
+          "extra": { "blockSize": 1000, "costPerBlock": 0.55, "costPerEmail": 0.00055 }
         }
       ],
       "marketingAllowed": null,
@@ -284,7 +338,7 @@
       "url": "https://resend.com/",
       "location": "US",
       "freePlan": true,
-      "freeLimits": "100/d + 3,000/mo",
+      "freeLimits": "3,000/mo",
       "payAsYouGo": false,
       "plans": [
         {
@@ -292,6 +346,48 @@
           "costPerMonth": 20.00,
           "costPerEmail": 0.00040,
           "extra": null
+        },
+        {
+          "volume": 100000,
+          "costPerMonth": 35.00,
+          "costPerEmail": 0.00035,
+          "extra": null
+        },
+        {
+          "volume": 100000,
+          "costPerMonth": 90.00,
+          "costPerEmail": 0.00090,
+          "extra": { "blockSize": 1000, "costPerBlock": 0.90, "costPerEmail": 0.00090 }
+        },
+        {
+          "volume": 200000,
+          "costPerMonth": 160.00,
+          "costPerEmail": 0.00080,
+          "extra": { "blockSize": 1000, "costPerBlock": 0.80, "costPerEmail": 0.00080 }
+        },
+        {
+          "volume": 500000,
+          "costPerMonth": 350.00,
+          "costPerEmail": 0.00070,
+          "extra": { "blockSize": 1000, "costPerBlock": 0.70, "costPerEmail": 0.00070 }
+        },
+        {
+          "volume": 1000000,
+          "costPerMonth": 650.00,
+          "costPerEmail": 0.00065,
+          "extra": { "blockSize": 1000, "costPerBlock": 0.65, "costPerEmail": 0.00065 }
+        },
+        {
+          "volume": 1500000,
+          "costPerMonth": 825.00,
+          "costPerEmail": 0.00055,
+          "extra": { "blockSize": 1000, "costPerBlock": 0.52, "costPerEmail": 0.00052 }
+        },
+        {
+          "volume": 2500000,
+          "costPerMonth": 1150.00,
+          "costPerEmail": 0.00046,
+          "extra": { "blockSize": 1000, "costPerBlock": 0.46, "costPerEmail": 0.00046 }
         }
       ],
       "marketingAllowed": null,
@@ -304,13 +400,19 @@
       "url": "https://www.scaleway.com/en/transactional-email-tem/",
       "location": "EU",
       "freePlan": true,
-      "freeLimits": "300/mo",
+      "freeLimits": "300 emails",
       "payAsYouGo": true,
       "plans": [
         {
-          "volume": 1000,
+          "volume": 300,
           "costPerMonth": 0.00,
-          "costPerEmail": 0.00025,
+          "costPerEmail": 0.00000,
+          "extra": { "blockSize": 1000, "costPerBlock": 0.25, "costPerEmail": 0.00025 }
+        },
+        {
+          "volume": 100000,
+          "costPerMonth": 80.00,
+          "costPerEmail": 0.00080,
           "extra": null
         }
       ],
@@ -349,9 +451,21 @@
       "plans": [
         {
           "volume": 50000,
-          "costPerMonth": 20.00,
+          "costPerMonth": 19.95,
           "costPerEmail": 0.00040,
           "extra": { "blockSize": 1000, "costPerBlock": 1.33, "costPerEmail": 0.00133 }
+        },
+        {
+          "volume": 100000,
+          "costPerMonth": 34.95,
+          "costPerEmail": 0.00035,
+          "extra": { "blockSize": 1000, "costPerBlock": 0.88, "costPerEmail": 0.00088 }
+        },
+        {
+          "volume": 100000,
+          "costPerMonth": 89.95,
+          "costPerEmail": 0.00090,
+          "extra": { "blockSize": 1000, "costPerBlock": 1.10, "costPerEmail": 0.00110 }
         }
       ],
       "marketingAllowed": null,
@@ -368,9 +482,21 @@
       "payAsYouGo": false,
       "plans": [
         {
+          "volume": 1000,
+          "costPerMonth": 5.00,
+          "costPerEmail": 0.00500,
+          "extra": null
+        },
+        {
           "volume": 5000,
           "costPerMonth": 15.00,
           "costPerEmail": 0.00300,
+          "extra": null
+        },
+        {
+          "volume": 10000,
+          "costPerMonth": 25.00,
+          "costPerEmail": 0.00250,
           "extra": null
         }
       ],
@@ -388,10 +514,52 @@
       "payAsYouGo": true,
       "plans": [
         {
-          "volume": 25000,
-          "costPerMonth": 0.00,
-          "costPerEmail": 0.00031,
-          "extra": { "blockSize": 10000, "costPerBlock": 15.00, "costPerEmail": 0.00150 }
+          "volume": 10000,
+          "costPerMonth": 15.00,
+          "costPerEmail": 0.00150,
+          "extra": null
+        },
+        {
+          "volume": 20000,
+          "costPerMonth": 28.00,
+          "costPerEmail": 0.00140,
+          "extra": null
+        },
+        {
+          "volume": 50000,
+          "costPerMonth": 49.00,
+          "costPerEmail": 0.00098,
+          "extra": null
+        },
+        {
+          "volume": 100000,
+          "costPerMonth": 89.00,
+          "costPerEmail": 0.00089,
+          "extra": null
+        },
+        {
+          "volume": 200000,
+          "costPerMonth": 175.00,
+          "costPerEmail": 0.00088,
+          "extra": null
+        },
+        {
+          "volume": 300000,
+          "costPerMonth": 259.00,
+          "costPerEmail": 0.00086,
+          "extra": null
+        },
+        {
+          "volume": 500000,
+          "costPerMonth": 419.00,
+          "costPerEmail": 0.00084,
+          "extra": null
+        },
+        {
+          "volume": 1000000,
+          "costPerMonth": 780.00,
+          "costPerEmail": 0.00078,
+          "extra": null
         }
       ],
       "marketingAllowed": null,
@@ -409,8 +577,8 @@
       "plans": [
         {
           "volume": 1000,
-          "costPerMonth": 14.00,
-          "costPerEmail": 0.01400,
+          "costPerMonth": 19.00,
+          "costPerEmail": 0.01900,
           "extra": null
         }
       ],
@@ -449,9 +617,21 @@
       "plans": [
         {
           "volume": 10000,
-          "costPerMonth": 15.00,
-          "costPerEmail": 0.00150,
-          "extra": { "blockSize": 1000, "costPerBlock": 1.20, "costPerEmail": 0.00120 }
+          "costPerMonth": 10.00,
+          "costPerEmail": 0.00100,
+          "extra": { "blockSize": 1000, "costPerBlock": 1.00, "costPerEmail": 0.00100 }
+        },
+        {
+          "volume": 100000,
+          "costPerMonth": 75.00,
+          "costPerEmail": 0.00075,
+          "extra": { "blockSize": 1000, "costPerBlock": 0.85, "costPerEmail": 0.00085 }
+        },
+        {
+          "volume": 3000000,
+          "costPerMonth": 0.00,
+          "costPerEmail": 0.00000,
+          "extra": null
         }
       ],
       "marketingAllowed": null,
@@ -512,6 +692,24 @@
           "costPerMonth": 8.00,
           "costPerEmail": 0.00040,
           "extra": null
+        },
+        {
+          "volume": 50000,
+          "costPerMonth": 10.00,
+          "costPerEmail": 0.00020,
+          "extra": null
+        },
+        {
+          "volume": 100000,
+          "costPerMonth": 63.00,
+          "costPerEmail": 0.00063,
+          "extra": null
+        },
+        {
+          "volume": 500000,
+          "costPerMonth": 216.00,
+          "costPerEmail": 0.00043,
+          "extra": null
         }
       ],
       "marketingAllowed": null,
@@ -548,15 +746,27 @@
       "payAsYouGo": false,
       "plans": [
         {
-          "volume": 10000,
+          "volume": 50000,
           "costPerMonth": 6.00,
-          "costPerEmail": 0.00060,
+          "costPerEmail": 0.00012,
           "extra": { "blockSize": 1000, "costPerBlock": 0.75, "costPerEmail": 0.00075 }
         },
         {
-          "volume": 20000,
-          "costPerMonth": 11.00,
-          "costPerEmail": 0.00055,
+          "volume": 50000,
+          "costPerMonth": 6.00,
+          "costPerEmail": 0.00012,
+          "extra": null
+        },
+        {
+          "volume": 50000,
+          "costPerMonth": 6.00,
+          "costPerEmail": 0.00012,
+          "extra": { "blockSize": 1000, "costPerBlock": 0.75, "costPerEmail": 0.00075 }
+        },
+        {
+          "volume": 50000,
+          "costPerMonth": 6.00,
+          "costPerEmail": 0.00012,
           "extra": null
         }
       ],
