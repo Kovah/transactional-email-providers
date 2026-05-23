@@ -1,0 +1,16 @@
+[
+  { "name": "Bird", "reason": "No transactional emails allowed" },
+  { "name": "Brevo", "reason": "Contact-based billing" },
+  { "name": "Buttondown", "reason": "Contact-based billing" },
+  { "name": "Email Octopus", "reason": "Contact-based billing" },
+  { "name": "GetResponse", "reason": "Contact-based billing" },
+  { "name": "Loops", "reason": "Contact-based billing" },
+  { "name": "Mailjet", "reason": "Contact-based billing" },
+  { "name": "Mailscribe", "reason": "Enterprise service only" },
+  { "name": "Moosend", "reason": "Contact-based billing or expensive credits" },
+  { "name": "Netcore", "reason": "Enterprise service only" },
+  { "name": "Omnisend", "reason": "Contact-based billing" },
+  { "name": "Pepipost", "reason": "Appears abandoned or unreliable" },
+  { "name": "Rapidmail", "reason": "Contact-based billing" },
+  { "name": "Sender.net", "reason": "Contact-based billing or expensive credits" }
+]

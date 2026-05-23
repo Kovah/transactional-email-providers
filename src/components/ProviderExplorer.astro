@@ -1,0 +1,73 @@
+---
+// src/components/ProviderExplorer.astro
+import type { Provider, OutOfScope } from '../lib/types';
+
+interface Props {
+  providers: Provider[];
+  outOfScope: OutOfScope[];
+}
+const { providers, outOfScope } = Astro.props;
+---
+
+{/* Embed data as JSON — read by Alpine init script */}
+<script is:inline type="application/json" id="provider-data" set:html={JSON.stringify(providers)} />
+<script is:inline type="application/json" id="out-of-scope-data" set:html={JSON.stringify(outOfScope)} />
+
+{/* Alpine app root */}
+<div x-data="providerApp" class="flex flex-col lg:flex-row gap-0 min-h-[calc(100vh-56px)]">
+
+  {/* Mobile filter bar */}
+  <div class="flex items-center justify-between border-b border-[#dcd8cf] bg-[#f0f0eb] px-4 py-2.5 dark:border-[#222] dark:bg-[#16161a] lg:hidden">
+    <span class="font-mono text-sm text-[#464138] dark:text-[#c0c0c8]" x-text="`${filtered.length} / ${allProviders.length} providers`"></span>
+    <button
+      @click="mobileFiltersOpen = true"
+      class="border border-[#b38f00] px-3 py-1.5 font-mono text-sm text-[#5a4d08] transition-colors hover:bg-[#ffd600]/10 dark:border-[#ffd600]/50 dark:text-[#ffd600]"
+    >
+      FILTERS <span x-show="hasActiveFilters" class="ml-1">●</span>
+    </button>
+  </div>
+
+  {/* Sidebar slot — hidden on mobile, shown on desktop */}
+  <aside class="hidden lg:block w-64 shrink-0 border-r border-[#222] dark:border-[#222226] overflow-y-auto">
+    <slot name="sidebar" />
+  </aside>
+
+  {/* Mobile filter drawer */}
+  <div
+    x-show="mobileFiltersOpen"
+    x-transition:enter="transition ease-out duration-200"
+    x-transition:enter-start="opacity-0"
+    x-transition:enter-end="opacity-100"
+    x-transition:leave="transition ease-in duration-150"
+    x-transition:leave-start="opacity-100"
+    x-transition:leave-end="opacity-0"
+    @click.self="mobileFiltersOpen = false"
+    class="lg:hidden fixed inset-0 z-40 bg-black/60"
+    style="display: none;"
+  >
+    <div
+      x-show="mobileFiltersOpen"
+      x-transition:enter="transition ease-out duration-200"
+      x-transition:enter-start="translate-y-full"
+      x-transition:enter-end="translate-y-0"
+      x-transition:leave="transition ease-in duration-150"
+      x-transition:leave-start="translate-y-0"
+      x-transition:leave-end="translate-y-full"
+      class="absolute bottom-0 left-0 right-0 max-h-[80vh] overflow-y-auto rounded-t-lg border-t border-[#b38f00]/35 bg-[#f0f0eb] dark:border-[#ffd600]/30 dark:bg-[#16161a]"
+    >
+      <div class="flex items-center justify-between border-b border-[#d5d0c5] px-4 py-3 dark:border-[#222]">
+        <span class="font-mono text-sm tracking-widest text-[#5a4d08] dark:text-[#ffd600]">FILTERS</span>
+        <button @click="mobileFiltersOpen = false" class="font-mono text-[#4f4b43] hover:text-[#2a2824] dark:text-[#a4a4ad] dark:hover:text-[#ffd600]">✕</button>
+      </div>
+      <div class="p-4">
+        <slot name="sidebar-mobile" />
+      </div>
+    </div>
+  </div>
+
+  {/* Main content */}
+  <main class="flex-1 min-w-0 overflow-y-auto">
+    <slot name="list" />
+    <slot name="out-of-scope" />
+  </main>
+</div>

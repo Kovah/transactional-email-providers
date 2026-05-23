@@ -1,0 +1,589 @@
+{
+  "lastUpdated": "2025-12-02",
+  "providers": [
+    {
+      "name": "AHA Send",
+      "url": "https://ahasend.com/",
+      "location": "EU",
+      "freePlan": true,
+      "freeLimits": "1,000/mo",
+      "payAsYouGo": false,
+      "plans": [
+        {
+          "volume": 25000,
+          "costPerMonth": 10.00,
+          "costPerEmail": 0.00040,
+          "extra": { "blockSize": 1000, "costPerBlock": 0.50, "costPerEmail": 0.00050 }
+        }
+      ],
+      "marketingAllowed": false,
+      "verificationNeeded": null,
+      "domainLimit": null,
+      "notes": null
+    },
+    {
+      "name": "AWS SES",
+      "url": "https://aws.amazon.com/ses/",
+      "location": "US",
+      "freePlan": false,
+      "freeLimits": null,
+      "payAsYouGo": true,
+      "plans": [
+        {
+          "volume": 1000,
+          "costPerMonth": 0.00,
+          "costPerEmail": 0.00010,
+          "extra": null
+        }
+      ],
+      "marketingAllowed": null,
+      "verificationNeeded": null,
+      "domainLimit": null,
+      "notes": "Additional costs for outgoing data transfer apply."
+    },
+    {
+      "name": "Elastic Email",
+      "url": "https://elasticemail.com/",
+      "location": "CA",
+      "freePlan": true,
+      "freeLimits": null,
+      "payAsYouGo": false,
+      "plans": [
+        {
+          "volume": 50000,
+          "costPerMonth": 19.00,
+          "costPerEmail": 0.00038,
+          "extra": null
+        }
+      ],
+      "marketingAllowed": null,
+      "verificationNeeded": null,
+      "domainLimit": null,
+      "notes": null
+    },
+    {
+      "name": "Emailit",
+      "url": "https://emailit.com/",
+      "location": "EU",
+      "freePlan": false,
+      "freeLimits": null,
+      "payAsYouGo": true,
+      "plans": [
+        {
+          "volume": 100000,
+          "costPerMonth": 0.00,
+          "costPerEmail": 0.00020,
+          "extra": null
+        }
+      ],
+      "marketingAllowed": null,
+      "verificationNeeded": null,
+      "domainLimit": null,
+      "notes": "Credits system. Reported deliverability issues."
+    },
+    {
+      "name": "Emaillabs",
+      "url": "https://emaillabs.io/",
+      "location": "EU",
+      "freePlan": true,
+      "freeLimits": "300/d + 9,000/mo",
+      "payAsYouGo": false,
+      "plans": [
+        {
+          "volume": 30000,
+          "costPerMonth": 29.00,
+          "costPerEmail": 0.00097,
+          "extra": null
+        }
+      ],
+      "marketingAllowed": null,
+      "verificationNeeded": null,
+      "domainLimit": null,
+      "notes": null
+    },
+    {
+      "name": "Mailchimp Transactional",
+      "url": "https://mailchimp.com/pricing/transactional-email/",
+      "location": "US",
+      "freePlan": false,
+      "freeLimits": null,
+      "payAsYouGo": false,
+      "plans": [
+        {
+          "volume": 25000,
+          "costPerMonth": 20.00,
+          "costPerEmail": 0.00080,
+          "extra": { "blockSize": 10000, "costPerBlock": 20.00, "costPerEmail": 0.00200 }
+        }
+      ],
+      "marketingAllowed": null,
+      "verificationNeeded": null,
+      "domainLimit": null,
+      "notes": null
+    },
+    {
+      "name": "Mailerlite",
+      "url": "https://www.mailerlite.com/",
+      "location": "EU",
+      "freePlan": true,
+      "freeLimits": "3,000/mo",
+      "payAsYouGo": false,
+      "plans": [
+        {
+          "volume": 5000,
+          "costPerMonth": 5.60,
+          "costPerEmail": 0.00112,
+          "extra": { "blockSize": 1000, "costPerBlock": 1.20, "costPerEmail": 0.00120 }
+        },
+        {
+          "volume": 50000,
+          "costPerMonth": 28.00,
+          "costPerEmail": 0.00056,
+          "extra": { "blockSize": 1000, "costPerBlock": 0.95, "costPerEmail": 0.00095 }
+        }
+      ],
+      "marketingAllowed": true,
+      "verificationNeeded": null,
+      "domainLimit": 1,
+      "notes": null
+    },
+    {
+      "name": "Maileroo",
+      "url": "https://maileroo.com/",
+      "location": "US",
+      "freePlan": true,
+      "freeLimits": "3,000/mo",
+      "payAsYouGo": false,
+      "plans": [
+        {
+          "volume": 25000,
+          "costPerMonth": 10.00,
+          "costPerEmail": 0.00040,
+          "extra": null
+        },
+        {
+          "volume": 50000,
+          "costPerMonth": 15.00,
+          "costPerEmail": 0.00030,
+          "extra": null
+        }
+      ],
+      "marketingAllowed": false,
+      "verificationNeeded": null,
+      "domainLimit": null,
+      "notes": "No over-usage possible — upgrade to next plan required."
+    },
+    {
+      "name": "Mailgun",
+      "url": "https://www.mailgun.com/",
+      "location": "US",
+      "freePlan": true,
+      "freeLimits": "100/d",
+      "payAsYouGo": false,
+      "plans": [
+        {
+          "volume": 10000,
+          "costPerMonth": 15.00,
+          "costPerEmail": 0.00150,
+          "extra": { "blockSize": 1000, "costPerBlock": 1.80, "costPerEmail": 0.00180 }
+        }
+      ],
+      "marketingAllowed": null,
+      "verificationNeeded": null,
+      "domainLimit": null,
+      "notes": null
+    },
+    {
+      "name": "MailPace",
+      "url": "https://mailpace.com/",
+      "location": "UK",
+      "freePlan": false,
+      "freeLimits": null,
+      "payAsYouGo": false,
+      "plans": [
+        {
+          "volume": 10000,
+          "costPerMonth": 7.60,
+          "costPerEmail": 0.00076,
+          "extra": { "blockSize": 10000, "costPerBlock": 7.60, "costPerEmail": 0.00076 }
+        }
+      ],
+      "marketingAllowed": null,
+      "verificationNeeded": null,
+      "domainLimit": null,
+      "notes": null
+    },
+    {
+      "name": "Mailtrap",
+      "url": "https://mailtrap.io/",
+      "location": "US",
+      "freePlan": true,
+      "freeLimits": "1,000/mo",
+      "payAsYouGo": false,
+      "plans": [
+        {
+          "volume": 10000,
+          "costPerMonth": 15.00,
+          "costPerEmail": 0.00150,
+          "extra": { "blockSize": 1000, "costPerBlock": 1.00, "costPerEmail": 0.00100 }
+        },
+        {
+          "volume": 50000,
+          "costPerMonth": 20.00,
+          "costPerEmail": 0.00040,
+          "extra": null
+        }
+      ],
+      "marketingAllowed": null,
+      "verificationNeeded": null,
+      "domainLimit": null,
+      "notes": null
+    },
+    {
+      "name": "Plunk",
+      "url": "https://www.useplunk.com/",
+      "location": "US",
+      "freePlan": true,
+      "freeLimits": "1,000/mo",
+      "payAsYouGo": true,
+      "plans": [
+        {
+          "volume": 1000,
+          "costPerMonth": 0.00,
+          "costPerEmail": 0.00100,
+          "extra": null
+        }
+      ],
+      "marketingAllowed": true,
+      "verificationNeeded": null,
+      "domainLimit": null,
+      "notes": null
+    },
+    {
+      "name": "Postmark",
+      "url": "https://postmarkapp.com/",
+      "location": "US",
+      "freePlan": false,
+      "freeLimits": null,
+      "payAsYouGo": false,
+      "plans": [
+        {
+          "volume": 10000,
+          "costPerMonth": 15.00,
+          "costPerEmail": 0.00150,
+          "extra": { "blockSize": 1000, "costPerBlock": 1.80, "costPerEmail": 0.00180 }
+        }
+      ],
+      "marketingAllowed": null,
+      "verificationNeeded": null,
+      "domainLimit": null,
+      "notes": null
+    },
+    {
+      "name": "Resend",
+      "url": "https://resend.com/",
+      "location": "US",
+      "freePlan": true,
+      "freeLimits": "100/d + 3,000/mo",
+      "payAsYouGo": false,
+      "plans": [
+        {
+          "volume": 50000,
+          "costPerMonth": 20.00,
+          "costPerEmail": 0.00040,
+          "extra": null
+        }
+      ],
+      "marketingAllowed": null,
+      "verificationNeeded": null,
+      "domainLimit": 10,
+      "notes": null
+    },
+    {
+      "name": "Scaleway",
+      "url": "https://www.scaleway.com/en/transactional-email-tem/",
+      "location": "EU",
+      "freePlan": true,
+      "freeLimits": "300/mo",
+      "payAsYouGo": true,
+      "plans": [
+        {
+          "volume": 1000,
+          "costPerMonth": 0.00,
+          "costPerEmail": 0.00025,
+          "extra": null
+        }
+      ],
+      "marketingAllowed": false,
+      "verificationNeeded": null,
+      "domainLimit": 5,
+      "notes": null
+    },
+    {
+      "name": "Sendamatic",
+      "url": "https://www.sendamatic.net/",
+      "location": "UK",
+      "freePlan": false,
+      "freeLimits": null,
+      "payAsYouGo": true,
+      "plans": [
+        {
+          "volume": 1000,
+          "costPerMonth": 0.00,
+          "costPerEmail": 0.000088,
+          "extra": null
+        }
+      ],
+      "marketingAllowed": null,
+      "verificationNeeded": null,
+      "domainLimit": null,
+      "notes": null
+    },
+    {
+      "name": "Sendgrid",
+      "url": "https://sendgrid.com/",
+      "location": "US",
+      "freePlan": true,
+      "freeLimits": "100/d",
+      "payAsYouGo": false,
+      "plans": [
+        {
+          "volume": 50000,
+          "costPerMonth": 20.00,
+          "costPerEmail": 0.00040,
+          "extra": { "blockSize": 1000, "costPerBlock": 1.33, "costPerEmail": 0.00133 }
+        }
+      ],
+      "marketingAllowed": null,
+      "verificationNeeded": null,
+      "domainLimit": null,
+      "notes": null
+    },
+    {
+      "name": "Sendlayer",
+      "url": "https://sendlayer.com/",
+      "location": "US",
+      "freePlan": false,
+      "freeLimits": null,
+      "payAsYouGo": false,
+      "plans": [
+        {
+          "volume": 5000,
+          "costPerMonth": 15.00,
+          "costPerEmail": 0.00300,
+          "extra": null
+        }
+      ],
+      "marketingAllowed": null,
+      "verificationNeeded": null,
+      "domainLimit": null,
+      "notes": null
+    },
+    {
+      "name": "SendPulse",
+      "url": "https://sendpulse.com/",
+      "location": "US",
+      "freePlan": false,
+      "freeLimits": null,
+      "payAsYouGo": true,
+      "plans": [
+        {
+          "volume": 25000,
+          "costPerMonth": 0.00,
+          "costPerEmail": 0.00031,
+          "extra": { "blockSize": 10000, "costPerBlock": 15.00, "costPerEmail": 0.00150 }
+        }
+      ],
+      "marketingAllowed": null,
+      "verificationNeeded": null,
+      "domainLimit": 5,
+      "notes": null
+    },
+    {
+      "name": "Sidemail",
+      "url": "https://sidemail.io/",
+      "location": "EU",
+      "freePlan": false,
+      "freeLimits": null,
+      "payAsYouGo": false,
+      "plans": [
+        {
+          "volume": 1000,
+          "costPerMonth": 14.00,
+          "costPerEmail": 0.01400,
+          "extra": null
+        }
+      ],
+      "marketingAllowed": null,
+      "verificationNeeded": null,
+      "domainLimit": null,
+      "notes": null
+    },
+    {
+      "name": "SMTP.com",
+      "url": "https://www.smtp.com/",
+      "location": "US",
+      "freePlan": false,
+      "freeLimits": null,
+      "payAsYouGo": false,
+      "plans": [
+        {
+          "volume": 50000,
+          "costPerMonth": 25.00,
+          "costPerEmail": 0.00050,
+          "extra": null
+        }
+      ],
+      "marketingAllowed": null,
+      "verificationNeeded": null,
+      "domainLimit": null,
+      "notes": null
+    },
+    {
+      "name": "SMTP2Go",
+      "url": "https://www.smtp2go.com/",
+      "location": "US",
+      "freePlan": true,
+      "freeLimits": "1,000/mo",
+      "payAsYouGo": false,
+      "plans": [
+        {
+          "volume": 10000,
+          "costPerMonth": 15.00,
+          "costPerEmail": 0.00150,
+          "extra": { "blockSize": 1000, "costPerBlock": 1.20, "costPerEmail": 0.00120 }
+        }
+      ],
+      "marketingAllowed": null,
+      "verificationNeeded": null,
+      "domainLimit": null,
+      "notes": null
+    },
+    {
+      "name": "SMTPKit",
+      "url": "https://smtpkit.com/",
+      "location": "US",
+      "freePlan": true,
+      "freeLimits": "100/mo",
+      "payAsYouGo": false,
+      "plans": [
+        {
+          "volume": 10000,
+          "costPerMonth": 12.00,
+          "costPerEmail": 0.00120,
+          "extra": null
+        }
+      ],
+      "marketingAllowed": null,
+      "verificationNeeded": null,
+      "domainLimit": null,
+      "notes": null
+    },
+    {
+      "name": "SocketLabs",
+      "url": "https://www.socketlabs.com/",
+      "location": "US",
+      "freePlan": false,
+      "freeLimits": null,
+      "payAsYouGo": false,
+      "plans": [
+        {
+          "volume": 40000,
+          "costPerMonth": 40.00,
+          "costPerEmail": 0.00100,
+          "extra": { "blockSize": 1000, "costPerBlock": 0.99, "costPerEmail": 0.00099 }
+        }
+      ],
+      "marketingAllowed": null,
+      "verificationNeeded": null,
+      "domainLimit": null,
+      "notes": null
+    },
+    {
+      "name": "Sweego",
+      "url": "https://www.sweego.io/",
+      "location": "EU",
+      "freePlan": true,
+      "freeLimits": "100/d",
+      "payAsYouGo": false,
+      "plans": [
+        {
+          "volume": 20000,
+          "costPerMonth": 8.00,
+          "costPerEmail": 0.00040,
+          "extra": null
+        }
+      ],
+      "marketingAllowed": null,
+      "verificationNeeded": null,
+      "domainLimit": null,
+      "notes": null
+    },
+    {
+      "name": "turboSMTP",
+      "url": "https://serversmtp.com/",
+      "location": "US",
+      "freePlan": false,
+      "freeLimits": null,
+      "payAsYouGo": true,
+      "plans": [
+        {
+          "volume": 50000,
+          "costPerMonth": 0.00,
+          "costPerEmail": 0.00040,
+          "extra": { "blockSize": 50000, "costPerBlock": 49.00, "costPerEmail": 0.00098 }
+        }
+      ],
+      "marketingAllowed": null,
+      "verificationNeeded": null,
+      "domainLimit": null,
+      "notes": "No webhooks."
+    },
+    {
+      "name": "Unione",
+      "url": "https://unione.io/en/",
+      "location": "EU",
+      "freePlan": false,
+      "freeLimits": "6,000/mo (4-month trial)",
+      "payAsYouGo": false,
+      "plans": [
+        {
+          "volume": 10000,
+          "costPerMonth": 6.00,
+          "costPerEmail": 0.00060,
+          "extra": { "blockSize": 1000, "costPerBlock": 0.75, "costPerEmail": 0.00075 }
+        },
+        {
+          "volume": 20000,
+          "costPerMonth": 11.00,
+          "costPerEmail": 0.00055,
+          "extra": null
+        }
+      ],
+      "marketingAllowed": null,
+      "verificationNeeded": null,
+      "domainLimit": null,
+      "notes": "4-month limited free trial with 6,000 emails/mo."
+    },
+    {
+      "name": "Zeptomail",
+      "url": "https://www.zoho.com/zeptomail/",
+      "location": "US",
+      "freePlan": false,
+      "freeLimits": null,
+      "payAsYouGo": true,
+      "plans": [
+        {
+          "volume": 10000,
+          "costPerMonth": 0.00,
+          "costPerEmail": 0.00025,
+          "extra": null
+        }
+      ],
+      "marketingAllowed": false,
+      "verificationNeeded": true,
+      "domainLimit": null,
+      "notes": "Credit system. Transactional emails only. Verification required at signup."
+    }
+  ]
+}

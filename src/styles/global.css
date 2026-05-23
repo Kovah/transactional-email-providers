@@ -1,0 +1,33 @@
+/* src/styles/global.css */
+@import "tailwindcss";
+
+/* Dark mode: toggled by adding/removing .dark on <html> */
+@variant dark (&:where(.dark, .dark *));
+
+/* Alpine.js: hide x-cloak elements until Alpine initialises */
+[x-cloak] { display: none !important; }
+
+html {
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+:focus-visible {
+  outline: 2px solid #ffd600;
+  outline-offset: 2px;
+}
+
+/* Night City Yellow design tokens */
+@theme {
+  --color-accent: #FFD600;
+  --color-accent-dim: #ccaf00;
+  --color-accent-light-readable: #6b5e0a;  /* Darker yellow for light mode readability */
+  --color-bg-primary: #111114;
+  --color-bg-surface: #1a1a1e;
+  --color-bg-surface-2: #16161a;
+  --color-border: #222226;
+  --color-border-accent: rgba(255, 214, 0, 0.35);
+}

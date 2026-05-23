@@ -1,0 +1,43 @@
+---
+// src/components/Header.astro
+interface Props {
+  lastUpdated: string;
+}
+const { lastUpdated } = Astro.props;
+---
+
+<header class="border-b border-[#FFD600]/30 dark:border-[#FFD600]/30 bg-[#f5f5f0] dark:bg-[#111114] sticky top-0 z-10 px-4 py-3">
+  <div class="mx-auto flex items-center justify-between gap-4">
+
+    <div class="flex items-center gap-3 min-w-0">
+      <div class="flex-1 min-w-0">
+        <h1 class="text-lg font-bold tracking-wide text-[#111114] dark:text-[#e8e8e0] leading-tight">
+          Transactional Email Providers
+        </h1>
+        <p class="mt-0.5 hidden font-mono text-sm text-[#48433b] dark:text-[#b9b9c2] sm:block">
+          API &amp; SMTP providers for sending transactional Emails
+        </p>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-3 shrink-0">
+      <span class="hidden rounded border border-[#cfcac0] px-2 py-1 font-mono text-xs text-[#4f4a43] dark:border-[#333] dark:text-[#b0b0b9] sm:inline">
+        Updated {lastUpdated}
+      </span>
+
+      {/* Dark mode toggle */}
+      <div x-data="themeToggle" class="relative">
+        <button
+          @click="toggle"
+          class="flex h-8 w-8 items-center justify-center rounded border border-[#cfcac0] text-[#4f4a43] transition-colors hover:border-[#FFD600] hover:text-[#7a6708] dark:border-[#333] dark:text-[#b9b9c2] dark:hover:text-[#FFD600]"
+          :aria-label="dark ? 'Switch to light mode' : 'Switch to dark mode'"
+          :aria-pressed="dark ? 'true' : 'false'"
+          :title="dark ? 'Switch to light mode' : 'Switch to dark mode'"
+        >
+          <span x-show="dark" x-cloak class="font-mono text-sm leading-none">☀</span>
+          <span x-show="!dark" x-cloak class="font-mono text-sm leading-none">☾</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>

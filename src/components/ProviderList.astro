@@ -1,0 +1,229 @@
+---
+// src/components/ProviderList.astro
+// Reads Alpine state from parent providerApp scope.
+---
+
+<div class="flex-1">
+  {/* Sort bar */}
+  <div class="sticky top-0 z-10 flex items-center justify-between gap-4 border-b border-[#e8e8e0] bg-[#eeeeea] px-4 py-2.5 dark:border-[#222226] dark:bg-[#16161a]">
+    <span class="font-mono text-xs tracking-widest text-[#5a4d08] dark:text-[#c0c0c8]">
+      <span x-text="filtered.length"></span> / <span x-text="allProviders.length"></span> PROVIDERS
+    </span>
+
+    <div class="flex items-center gap-1">
+      <span class="mr-1 font-mono text-xs text-[#4c473f] dark:text-[#a8a8b1]">SORT</span>
+
+      <button
+        @click="sortDir = sortBy === 'name' ? (sortDir === 'asc' ? 'desc' : 'asc') : 'asc'; sortBy = 'name'"
+        :class="sortBy === 'name' ? 'text-[#5a4d08] dark:text-[#FFD600] border-[#b38f00] dark:border-[#FFD600]/50 bg-[#fff8cc]/60 dark:bg-transparent' : 'text-[#4f4a43] border-[#bdb8ab] hover:text-[#222] hover:border-[#8f7a16] dark:text-[#b2b2ba] dark:border-[#333] dark:hover:text-[#f2f2ec]'"
+        class="border px-2 py-1 font-mono text-xs transition-colors"
+      >
+        <span class="hidden sm:inline">NAME </span>A–Z<span x-show="sortBy === 'name'" x-text="sortDir === 'asc' ? '↑' : '↓'" style="display: none;"></span>
+      </button>
+
+      <button
+        @click="sortDir = sortBy === 'price' ? (sortDir === 'asc' ? 'desc' : 'asc') : 'asc'; sortBy = 'price'"
+        :class="sortBy === 'price' ? 'text-[#5a4d08] dark:text-[#FFD600] border-[#b38f00] dark:border-[#FFD600]/50 bg-[#fff8cc]/60 dark:bg-transparent' : 'text-[#4f4a43] border-[#bdb8ab] hover:text-[#222] hover:border-[#8f7a16] dark:text-[#b2b2ba] dark:border-[#333] dark:hover:text-[#f2f2ec]'"
+        class="border px-2 py-1 font-mono text-xs transition-colors"
+      >
+        <span class="hidden sm:inline">PRICE </span>$<span x-show="sortBy === 'price'" x-text="sortDir === 'asc' ? '↑' : '↓'" style="display: none;"></span>
+      </button>
+
+      <button
+        @click="sortDir = sortBy === 'freeQuota' ? (sortDir === 'asc' ? 'desc' : 'asc') : 'asc'; sortBy = 'freeQuota'"
+        :class="sortBy === 'freeQuota' ? 'text-[#5a4d08] dark:text-[#FFD600] border-[#b38f00] dark:border-[#FFD600]/50 bg-[#fff8cc]/60 dark:bg-transparent' : 'text-[#4f4a43] border-[#bdb8ab] hover:text-[#222] hover:border-[#8f7a16] dark:text-[#b2b2ba] dark:border-[#333] dark:hover:text-[#f2f2ec]'"
+        class="border px-2 py-1 font-mono text-xs transition-colors"
+      >
+        <span class="hidden sm:inline">FREE </span>🆓<span x-show="sortBy === 'freeQuota'" x-text="sortDir === 'asc' ? '↑' : '↓'" style="display: none;"></span>
+      </button>
+    </div>
+  </div>
+
+  {/* Provider list */}
+  <div>
+    <template x-for="provider in filtered" :key="provider.name">
+      <div
+        :class="expanded === provider.name ? 'border-l-[#FFD600] bg-[#fafaf5] shadow-[inset_4px_0_0_0_#FFD600] dark:bg-[#1a1a1e]' : 'border-l-transparent hover:bg-[#f8f8f3] hover:shadow-[inset_4px_0_0_0_rgba(179,143,0,0.28)] dark:hover:bg-[#18181c] dark:hover:shadow-[inset_4px_0_0_0_rgba(255,214,0,0.18)]'"
+        class="cursor-pointer border-b border-l-2 border-[#e8e8e0] dark:border-[#1e1e22] transition-[background-color,box-shadow,border-color]"
+      >
+        {/* Collapsed row */}
+        <div
+          @click="toggleExpand(provider.name)"
+          @keydown.enter.prevent="toggleExpand(provider.name)"
+          @keydown.space.prevent="toggleExpand(provider.name)"
+          role="button"
+          tabindex="0"
+          :aria-expanded="expanded === provider.name"
+          :aria-label="provider.name + ' — click to expand pricing details'"
+          class="flex flex-wrap items-start gap-x-3 gap-y-2 px-3 py-3.5 sm:px-4"
+        >
+
+          {/* Name + location */}
+          <div class="flex items-center gap-2 w-full sm:w-auto sm:min-w-[180px] sm:flex-1">
+            <span class="text-base font-semibold text-[#111] dark:text-[#e8e8e0]" x-text="provider.name"></span>
+            <span class="font-mono text-sm text-[#5e5a52] dark:text-[#aeaeb7]" x-text="locationFlag(provider.location) + ' ' + provider.location"></span>
+            <a
+              :href="provider.url"
+              target="_blank"
+              rel="noopener noreferrer"
+              @click.stop
+              class="ml-auto inline-flex shrink-0 items-center justify-center text-[#8d7510] transition-colors hover:text-[#5a4d08] dark:text-[#d0b200] dark:hover:text-[#ffd600]"
+              title="Visit website"
+              aria-label="Visit provider website"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                class="h-4 w-4"
+                aria-hidden="true"
+              >
+                <path d="M10 13a5 5 0 0 0 7.07 0l1.41-1.41a5 5 0 0 0-7.07-7.07L10 5" />
+                <path d="M14 11a5 5 0 0 0-7.07 0L5.51 12.41a5 5 0 0 0 7.07 7.07L14 19" />
+              </svg>
+            </a>
+          </div>
+
+          {/* Free badge */}
+          <div class="flex items-center gap-1">
+            <template x-if="provider.freePlan">
+              <span class="border border-green-600/30 px-1.5 py-0.5 font-mono text-xs text-green-700 dark:border-green-400/30 dark:text-green-400" x-text="provider.freeLimits ? 'Free: ' + provider.freeLimits : 'Free tier'"></span>
+            </template>
+            <template x-if="!provider.freePlan && provider.freeLimits">
+              <span class="border border-[#bdb8ab] px-1.5 py-0.5 font-mono text-xs text-[#545047] dark:border-[#333] dark:text-[#b3b3bb]" x-text="provider.freeLimits"></span>
+            </template>
+          </div>
+
+          {/* Cheapest plan summary */}
+          <div class="font-mono text-sm text-[#45413a] dark:text-[#c4c4cc]">
+            <template x-if="provider.payAsYouGo && provider.plans[0].costPerMonth === 0">
+              <span>PayG · <span x-text="'$' + provider.plans[0].costPerEmail.toFixed(5) + '/mail'"></span></span>
+            </template>
+            <template x-if="!(provider.payAsYouGo && provider.plans[0].costPerMonth === 0)">
+              <span x-text="provider.plans[0].volume.toLocaleString() + ' / $' + provider.plans[0].costPerMonth + '/mo'"></span>
+            </template>
+          </div>
+
+          {/* Tags */}
+          <div class="flex flex-wrap gap-1 ml-auto">
+            <template x-if="provider.marketingAllowed === false">
+              <span class="border border-[#bdb8ab] px-1.5 py-0.5 font-mono text-[10px] text-[#575249] dark:border-[#333] dark:text-[#b3b3bb]">No marketing</span>
+            </template>
+            <template x-if="provider.marketingAllowed === true">
+              <span class="border border-green-600/30 px-1.5 py-0.5 font-mono text-[10px] text-green-700 dark:text-green-500">Marketing ✓</span>
+            </template>
+            <template x-if="provider.verificationNeeded === true">
+              <span class="border border-orange-500/30 px-1.5 py-0.5 font-mono text-[10px] text-orange-600">Verification req.</span>
+            </template>
+            <template x-if="provider.domainLimit !== null">
+              <span class="border border-[#bdb8ab] px-1.5 py-0.5 font-mono text-[10px] text-[#575249] dark:border-[#333] dark:text-[#b3b3bb]" x-text="'Domains: ' + provider.domainLimit"></span>
+            </template>
+          </div>
+
+          {/* Expand chevron */}
+          <span
+            :class="expanded === provider.name ? 'rotate-180 text-[#FFD600]' : 'text-[#45413a] dark:text-[#b6b6be]'"
+            class="ml-1 mt-0.5 shrink-0 font-mono text-sm transition-transform"
+          >▾</span>
+
+        </div>
+
+        {/* Expanded details */}
+        <div
+          x-cloak
+          x-show="expanded === provider.name"
+          x-transition:enter="transition ease-out duration-120"
+          x-transition:enter-start="opacity-0"
+          x-transition:enter-end="opacity-100"
+          x-transition:leave="transition ease-in duration-90"
+          x-transition:leave-start="opacity-100"
+          x-transition:leave-end="opacity-0"
+          @click.stop
+          class="px-4 pb-4 bg-[#fafaf5] dark:bg-[#1a1a1e]"
+        >
+          <div class="border-t border-[#e8e8e0] dark:border-[#222] pt-3 space-y-3">
+
+            {/* Pricing table */}
+            <div>
+              <p class="mb-2 font-mono text-xs tracking-widest text-[#5a4d08] dark:text-[#FFD600]">PRICING TIERS</p>
+              <div class="overflow-x-auto">
+                <table class="w-full border-collapse font-mono text-sm">
+                  <thead>
+                    <tr class="border-b border-[#e0e0d8] text-[#575249] dark:border-[#222] dark:text-[#b7b7bf]">
+                      <th class="text-left py-1 pr-4">Volume</th>
+                      <th class="text-right py-1 pr-4">Monthly</th>
+                      <th class="text-right py-1 pr-4">Per email</th>
+                      <th class="text-right py-1">Extra / block</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <template x-for="(plan, i) in provider.plans" :key="i">
+                      <tr class="border-b border-[#f0f0e8] text-[#4a463f] dark:border-[#1e1e22] dark:text-[#bdbdc5]">
+                        <td class="py-1.5 pr-4 text-[#111] dark:text-[#e8e8e0]" x-text="plan.volume.toLocaleString() + ' emails'"></td>
+                        <td class="py-1.5 pr-4 text-right" x-text="plan.costPerMonth === 0 ? 'Pay as you go' : '$' + plan.costPerMonth.toFixed(2)"></td>
+                        <td class="py-1.5 pr-4 text-right text-[#6b5e0a] dark:text-[#FFD600]" x-text="'$' + plan.costPerEmail.toFixed(5)"></td>
+                        <td class="py-1.5 text-right">
+                          <template x-if="plan.extra">
+                            <span x-text="'$' + plan.extra.costPerEmail.toFixed(5) + ' / mail'"></span>
+                          </template>
+                          <template x-if="!plan.extra">
+                            <span class="text-[#4a463f] dark:text-[#bdbdc5]">—</span>
+                          </template>
+                        </td>
+                      </tr>
+                    </template>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {/* Notes */}
+            <template x-if="provider.notes">
+              <p class="border-l-2 border-[#ffd600]/45 pl-2 text-sm italic text-[#4d4941] dark:text-[#bbbbc3]" x-text="provider.notes"></p>
+            </template>
+
+            {/* Link */}
+            <a
+              :href="provider.url"
+              target="_blank"
+              rel="noopener noreferrer"
+              @click.stop
+              class="inline-flex items-center gap-2 border border-[#b38f00] px-3 py-1.5 font-mono text-xs tracking-widest text-[#5a4d08] transition-colors hover:bg-[#ffd600]/10 dark:border-[#FFD600]/50 dark:text-[#FFD600]"
+            >
+              <span>VISIT WEBSITE</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                class="h-3.5 w-3.5"
+                aria-hidden="true"
+              >
+                <path d="M10 13a5 5 0 0 0 7.07 0l1.41-1.41a5 5 0 0 0-7.07-7.07L10 5" />
+                <path d="M14 11a5 5 0 0 0-7.07 0L5.51 12.41a5 5 0 0 0 7.07 7.07L14 19" />
+              </svg>
+            </a>
+
+          </div>
+        </div>
+      </div>
+    </template>
+
+    {/* Empty state */}
+    <div x-show="filtered.length === 0" style="display: none;" class="p-12 text-center font-mono">
+      <p class="mb-1 text-sm text-[#5a4d08] dark:text-[#FFD600]">NO RESULTS</p>
+      <p class="text-sm text-[#545047] dark:text-[#b7b7bf]">No providers match the current filters.</p>
+      <button @click="resetFilters()" class="mt-4 border border-[#b7b3a7] px-3 py-1.5 text-sm text-[#4e4a42] transition-colors hover:border-[#b38f00] hover:text-[#2c2924] dark:border-[#333] dark:text-[#b3b3bb] dark:hover:border-[#FFD600]/50 dark:hover:text-[#FFD600]">
+        Reset filters
+      </button>
+    </div>
+
+  </div>
+</div>

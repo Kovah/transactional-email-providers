@@ -1,0 +1,122 @@
+---
+// src/components/FilterSidebar.astro
+// No props — reads state from parent Alpine x-data scope (providerApp)
+const locations = ['EU', 'US', 'UK', 'CA', 'Global'];
+---
+
+<div class="p-4 space-y-5">
+
+  {/* Search */}
+  <div>
+    <label class="mb-1.5 block font-mono text-xs tracking-widest text-[#5a4d08] dark:text-[#ffd84d]">SEARCH</label>
+    <input
+      type="text"
+      x-model="search"
+      placeholder="Filter by name…"
+      class="w-full border border-[#b9b7ae] bg-[#f8f7f2] px-2.5 py-2 font-mono text-sm text-[#171717] placeholder-[#6f6b60] transition-colors outline-none focus:border-[#b38f00] dark:border-[#3e3e44] dark:bg-[#111114] dark:text-[#f3f3ee] dark:placeholder-[#8a8a92] dark:focus:border-[#ffd600]"
+    />
+  </div>
+
+  {/* Location chips */}
+  <div>
+    <label class="mb-1.5 block font-mono text-xs tracking-widest text-[#5a4d08] dark:text-[#ffd84d]">LOCATION</label>
+    <div class="flex flex-wrap gap-1.5">
+      {locations.map(loc => (
+        <button
+          @click={`toggleLocation('${loc}')`}
+          :class={`locations.includes('${loc}') ? 'border-[#ffd600] bg-[#ffd600] font-bold text-[#111114]' : 'border-[#b7b3a7] bg-[#fffdf8] text-[#49453d] hover:border-[#b38f00] hover:text-[#2f2c27] dark:border-[#3b3b41] dark:bg-transparent dark:text-[#b8b8bf] dark:hover:border-[#ffd600]/65 dark:hover:text-[#f1f1eb]'`}
+          class="border px-2 py-1 font-mono text-xs transition-colors"
+        >
+          {loc}
+        </button>
+      ))}
+    </div>
+  </div>
+
+  {/* Feature toggles */}
+  <div>
+    <label class="mb-1.5 block font-mono text-xs tracking-widest text-[#5a4d08] dark:text-[#ffd84d]">FEATURES</label>
+    <div class="space-y-2">
+
+      <label class="flex items-center gap-2.5 cursor-pointer group">
+        <button
+          type="button"
+          role="switch"
+          @click="filterFreePlan = !filterFreePlan"
+          :aria-checked="filterFreePlan.toString()"
+          :class="filterFreePlan ? 'bg-[#FFD600]' : 'bg-[#ddd] dark:bg-[#333]'"
+          class="relative w-8 h-4 rounded-full transition-colors shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FFD600]"
+        >
+          <div
+            :class="filterFreePlan ? 'translate-x-4' : 'translate-x-0.5'"
+            class="absolute top-0.5 w-3 h-3 rounded-full bg-white dark:bg-[#111114] transition-transform"
+          ></div>
+        </button>
+        <span class="text-sm text-[#36332d] transition-colors group-hover:text-[#111] dark:text-[#c2c2c9] dark:group-hover:text-[#f0f0ea]">Free plan available</span>
+      </label>
+
+      <label class="flex items-center gap-2.5 cursor-pointer group">
+        <button
+          type="button"
+          role="switch"
+          @click="filterPayAsYouGo = !filterPayAsYouGo"
+          :aria-checked="filterPayAsYouGo.toString()"
+          :class="filterPayAsYouGo ? 'bg-[#FFD600]' : 'bg-[#ddd] dark:bg-[#333]'"
+          class="relative w-8 h-4 rounded-full transition-colors shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FFD600]"
+        >
+          <div
+            :class="filterPayAsYouGo ? 'translate-x-4' : 'translate-x-0.5'"
+            class="absolute top-0.5 w-3 h-3 rounded-full bg-white dark:bg-[#111114] transition-transform"
+          ></div>
+        </button>
+        <span class="text-sm text-[#36332d] transition-colors group-hover:text-[#111] dark:text-[#c2c2c9] dark:group-hover:text-[#f0f0ea]">Pay-as-you-go</span>
+      </label>
+
+      <label class="flex items-center gap-2.5 cursor-pointer group">
+        <button
+          type="button"
+          role="switch"
+          @click="filterMarketingAllowed = !filterMarketingAllowed"
+          :aria-checked="filterMarketingAllowed.toString()"
+          :class="filterMarketingAllowed ? 'bg-[#FFD600]' : 'bg-[#ddd] dark:bg-[#333]'"
+          class="relative w-8 h-4 rounded-full transition-colors shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FFD600]"
+        >
+          <div
+            :class="filterMarketingAllowed ? 'translate-x-4' : 'translate-x-0.5'"
+            class="absolute top-0.5 w-3 h-3 rounded-full bg-white dark:bg-[#111114] transition-transform"
+          ></div>
+        </button>
+        <span class="text-sm text-[#36332d] transition-colors group-hover:text-[#111] dark:text-[#c2c2c9] dark:group-hover:text-[#f0f0ea]">Marketing allowed</span>
+      </label>
+
+      <label class="flex items-center gap-2.5 cursor-pointer group">
+        <button
+          type="button"
+          role="switch"
+          @click="filterNoVerification = !filterNoVerification"
+          :aria-checked="filterNoVerification.toString()"
+          :class="filterNoVerification ? 'bg-[#FFD600]' : 'bg-[#ddd] dark:bg-[#333]'"
+          class="relative w-8 h-4 rounded-full transition-colors shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FFD600]"
+        >
+          <div
+            :class="filterNoVerification ? 'translate-x-4' : 'translate-x-0.5'"
+            class="absolute top-0.5 w-3 h-3 rounded-full bg-white dark:bg-[#111114] transition-transform"
+          ></div>
+        </button>
+        <span class="text-sm text-[#36332d] transition-colors group-hover:text-[#111] dark:text-[#c2c2c9] dark:group-hover:text-[#f0f0ea]">No verification required</span>
+      </label>
+
+    </div>
+  </div>
+
+  {/* Reset */}
+  <div x-show="hasActiveFilters" style="display: none;">
+    <button
+      @click="resetFilters()"
+      class="w-full border border-[#b7b3a7] px-3 py-1.5 font-mono text-xs tracking-widest text-[#4e4a42] transition-colors hover:border-[#b38f00] hover:text-[#2c2924] dark:border-[#3b3b41] dark:text-[#b3b3bb] dark:hover:border-[#ffd600]/65 dark:hover:text-[#ffd600]"
+    >
+      RESET FILTERS
+    </button>
+  </div>
+
+</div>

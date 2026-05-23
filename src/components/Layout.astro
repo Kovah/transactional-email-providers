@@ -1,0 +1,179 @@
+---
+// src/components/Layout.astro
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+}
+const { title = 'Transactional Email Providers' } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Compare transactional email providers — pricing, free plans, API & SMTP, EU/US locations, and more." />
+    <meta property="og:title" content="Transactional Email Providers" />
+    <meta property="og:description" content="Compare transactional email providers — pricing, free plans, API & SMTP, EU/US locations." />
+    <meta property="og:type" content="website" />
+    <title>{title}</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    {/* Dark mode init — runs before paint to avoid flash */}
+    <script is:inline>
+      (function () {
+        const stored = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const dark = stored ? stored === 'dark' : prefersDark;
+        document.documentElement.classList.toggle('dark', dark);
+      })();
+    </script>
+
+    {/* Alpine component registrations — must come before Alpine CDN script */}
+    <script is:inline>
+      document.addEventListener('alpine:init', () => {
+        Alpine.data('themeToggle', () => ({
+          dark: document.documentElement.classList.contains('dark'),
+          toggle() {
+            this.dark = !this.dark;
+            document.documentElement.classList.toggle('dark', this.dark);
+            localStorage.setItem('theme', this.dark ? 'dark' : 'light');
+          },
+        }));
+
+        Alpine.data('providerApp', () => {
+          const providerDataEl = document.getElementById('provider-data');
+          const outOfScopeDataEl = document.getElementById('out-of-scope-data');
+
+          // Guard: only active on pages that include ProviderExplorer
+          if (!providerDataEl || !outOfScopeDataEl) {
+            return { allProviders: [], outOfScope: [], filtered: [], hasActiveFilters: false };
+          }
+
+          const providers = JSON.parse(providerDataEl.textContent);
+          const outOfScope = JSON.parse(outOfScopeDataEl.textContent);
+
+          return {
+            allProviders: providers,
+            outOfScope: outOfScope,
+
+            // Filter state
+            search: '',
+            locations: [],
+            filterFreePlan: false,
+            filterPayAsYouGo: false,
+            filterMarketingAllowed: false,
+            filterNoVerification: false,
+
+            // Sort state
+            sortBy: 'name',     // 'name' | 'price' | 'freeQuota'
+            sortDir: 'asc',     // 'asc' | 'desc'
+
+            // UI state
+            expanded: null,
+            mobileFiltersOpen: false,
+
+            get filtered() {
+              let result = this.allProviders;
+
+              if (this.search.trim()) {
+                const q = this.search.trim().toLowerCase();
+                result = result.filter(p => p.name.toLowerCase().includes(q));
+              }
+              if (this.locations.length > 0) {
+                result = result.filter(p => this.locations.includes(p.location));
+              }
+              if (this.filterFreePlan) {
+                result = result.filter(p => p.freePlan);
+              }
+              if (this.filterPayAsYouGo) {
+                result = result.filter(p => p.payAsYouGo);
+              }
+              if (this.filterMarketingAllowed) {
+                result = result.filter(p => p.marketingAllowed === true);
+              }
+              if (this.filterNoVerification) {
+                result = result.filter(p => p.verificationNeeded !== true);
+              }
+
+              const extractFreeQuota = (provider) => {
+                if (!provider.freePlan) return 0;
+                const limits = provider.freeLimits ?? '';
+                const nums = [...limits.matchAll(/(\d[\d,]*)/g)]
+                  .map(match => Number(match[1].replaceAll(',', '')))
+                  .filter(Number.isFinite);
+                return nums.length > 0 ? Math.max(...nums) : 0;
+              };
+
+              return [...result].sort((a, b) => {
+                let cmp = 0;
+                if (this.sortBy === 'name') {
+                  cmp = a.name.localeCompare(b.name);
+                } else if (this.sortBy === 'price') {
+                  cmp = (a.plans[0]?.costPerMonth ?? 0) - (b.plans[0]?.costPerMonth ?? 0);
+                } else if (this.sortBy === 'freeQuota') {
+                  const aQuota = extractFreeQuota(a);
+                  const bQuota = extractFreeQuota(b);
+                  cmp = aQuota - bQuota || a.name.localeCompare(b.name);
+                }
+                return this.sortDir === 'asc' ? cmp : -cmp;
+              });
+            },
+
+            get hasActiveFilters() {
+              return (
+                this.search.trim() !== '' ||
+                this.locations.length > 0 ||
+                this.filterFreePlan ||
+                this.filterPayAsYouGo ||
+                this.filterMarketingAllowed ||
+                this.filterNoVerification
+              );
+            },
+
+            toggleLocation(loc) {
+              if (this.locations.includes(loc)) {
+                this.locations = this.locations.filter(l => l !== loc);
+              } else {
+                this.locations = [...this.locations, loc];
+              }
+            },
+
+            resetFilters() {
+              this.search = '';
+              this.locations = [];
+              this.filterFreePlan = false;
+              this.filterPayAsYouGo = false;
+              this.filterMarketingAllowed = false;
+              this.filterNoVerification = false;
+            },
+
+            toggleExpand(name) {
+              this.expanded = this.expanded === name ? null : name;
+            },
+
+            formatCost(amount) {
+              if (amount === null || amount === undefined) return '—';
+              if (amount === 0) return 'Free';
+              const abs = Math.abs(amount);
+              const formatted = `$${abs.toFixed(abs < 0.01 ? 5 : 2)}`;
+              return amount < 0 ? `-${formatted}` : formatted;
+            },
+
+            locationFlag(loc) {
+              const flags = { EU: '🇪🇺', US: '🇺🇸', UK: '🇬🇧', CA: '🇨🇦', Global: '🌍' };
+              return flags[loc] || '🌐';
+            },
+          };
+        });
+      });
+    </script>
+
+    {/* Alpine.js — defer means it runs after full DOM parse, so alpine:init listeners
+        in slot content are registered before Alpine initialises. */}
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.3/dist/cdn.min.js" defer></script>
+  </head>
+  <body class="bg-[#f5f5f0] dark:bg-[#111114] text-[#111114] dark:text-[#e8e8e0] min-h-screen transition-colors duration-200">
+    <slot />
+  </body>
+</html>
