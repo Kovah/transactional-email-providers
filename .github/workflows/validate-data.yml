@@ -1,0 +1,31 @@
+name: Validate Data
+
+on:
+  pull_request:
+    paths:
+      - 'src/data/providers.json'
+      - 'src/data/out-of-scope.json'
+      - 'schemas/**'
+      - 'scripts/validate-data.mjs'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/validate-data.yml'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate data files
+        run: npm run validate:data
