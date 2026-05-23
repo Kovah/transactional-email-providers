@@ -22,11 +22,11 @@
       </button>
 
       <button
-        @click="sortDir = sortBy === 'price' ? (sortDir === 'asc' ? 'desc' : 'asc') : 'asc'; sortBy = 'price'"
-        :class="sortBy === 'price' ? 'text-[#5a4d08] dark:text-[#FFD600] border-[#b38f00] dark:border-[#FFD600]/50 bg-[#fff8cc]/60 dark:bg-transparent' : 'text-[#4f4a43] border-[#bdb8ab] hover:text-[#222] hover:border-[#8f7a16] dark:text-[#b2b2ba] dark:border-[#333] dark:hover:text-[#f2f2ec]'"
+        @click="sortDir = sortBy === 'rate' ? (sortDir === 'asc' ? 'desc' : 'asc') : 'asc'; sortBy = 'rate'"
+        :class="sortBy === 'rate' ? 'text-[#5a4d08] dark:text-[#FFD600] border-[#b38f00] dark:border-[#FFD600]/50 bg-[#fff8cc]/60 dark:bg-transparent' : 'text-[#4f4a43] border-[#bdb8ab] hover:text-[#222] hover:border-[#8f7a16] dark:text-[#b2b2ba] dark:border-[#333] dark:hover:text-[#f2f2ec]'"
         class="border px-2 py-1 font-mono text-xs transition-colors"
       >
-        <span class="hidden sm:inline">PRICE </span>$<span x-show="sortBy === 'price'" x-text="sortDir === 'asc' ? '↑' : '↓'" style="display: none;"></span>
+        <span class="hidden sm:inline">RATE </span>$/mail<span x-show="sortBy === 'rate'" x-text="sortDir === 'asc' ? '↑' : '↓'" style="display: none;"></span>
       </button>
 
       <button
@@ -55,80 +55,75 @@
           tabindex="0"
           :aria-expanded="expanded === provider.name"
           :aria-label="provider.name + ' — click to expand pricing details'"
-          class="flex flex-wrap items-start gap-x-3 gap-y-2 px-3 py-3.5 sm:px-4"
+          class="px-3 py-3.5 sm:px-4"
         >
+          <div class="flex items-start gap-3">
+            <div class="min-w-0 flex-1">
+              <div class="flex min-w-0 items-start gap-2">
+                <div class="min-w-0 flex-1">
+                  <div class="flex min-w-0 items-center gap-2">
+                    <span class="truncate text-base font-semibold text-[#111] dark:text-[#e8e8e0]" x-text="provider.name"></span>
+                    <span class="shrink-0 font-mono text-sm text-[#5e5a52] dark:text-[#aeaeb7]" x-text="locationFlag(provider.location) + ' ' + provider.location"></span>
+                    <a
+                      :href="provider.url"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      @click.stop
+                      class="inline-flex shrink-0 items-center justify-center text-[#8d7510] transition-colors hover:text-[#5a4d08] dark:text-[#d0b200] dark:hover:text-[#ffd600]"
+                      title="Visit website"
+                      aria-label="Visit provider website"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        class="h-4 w-4"
+                        aria-hidden="true"
+                      >
+                        <path d="M10 13a5 5 0 0 0 7.07 0l1.41-1.41a5 5 0 0 0-7.07-7.07L10 5" />
+                        <path d="M14 11a5 5 0 0 0-7.07 0L5.51 12.41a5 5 0 0 0 7.07 7.07L14 19" />
+                      </svg>
+                    </a>
+                  </div>
+                </div>
 
-          {/* Name + location */}
-          <div class="flex items-center gap-2 w-full sm:w-auto sm:min-w-[180px] sm:flex-1">
-            <span class="text-base font-semibold text-[#111] dark:text-[#e8e8e0]" x-text="provider.name"></span>
-            <span class="font-mono text-sm text-[#5e5a52] dark:text-[#aeaeb7]" x-text="locationFlag(provider.location) + ' ' + provider.location"></span>
-            <a
-              :href="provider.url"
-              target="_blank"
-              rel="noopener noreferrer"
-              @click.stop
-              class="ml-auto inline-flex shrink-0 items-center justify-center text-[#8d7510] transition-colors hover:text-[#5a4d08] dark:text-[#d0b200] dark:hover:text-[#ffd600]"
-              title="Visit website"
-              aria-label="Visit provider website"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                class="h-4 w-4"
-                aria-hidden="true"
-              >
-                <path d="M10 13a5 5 0 0 0 7.07 0l1.41-1.41a5 5 0 0 0-7.07-7.07L10 5" />
-                <path d="M14 11a5 5 0 0 0-7.07 0L5.51 12.41a5 5 0 0 0 7.07 7.07L14 19" />
-              </svg>
-            </a>
+                <div class="shrink-0 text-right font-mono text-sm text-[#45413a] dark:text-[#c4c4cc]">
+                  <div class="font-semibold text-[#2f2b25] dark:text-[#f0f0ea]" x-text="formatEmailRate(bestPlan(provider).costPerEmail)"></div>
+                  <div class="text-xs text-[#666056] dark:text-[#a7a7af]" x-text="formatTierContext(provider)"></div>
+                </div>
+
+                <span
+                  :class="expanded === provider.name ? 'rotate-180 text-[#FFD600]' : 'text-[#45413a] dark:text-[#b6b6be]'"
+                  class="mt-0.5 shrink-0 font-mono text-sm transition-transform"
+                >▾</span>
+              </div>
+
+              <div class="mt-2 flex flex-wrap items-center gap-1.5 pr-8 text-sm">
+                <template x-if="provider.freePlan">
+                  <span class="border border-green-600/30 px-1.5 py-0.5 font-mono text-xs text-green-700 dark:border-green-400/30 dark:text-green-400" x-text="provider.freeLimits ? 'Free: ' + provider.freeLimits : 'Free tier'"></span>
+                </template>
+                <template x-if="!provider.freePlan && provider.freeLimits">
+                  <span class="border border-[#bdb8ab] px-1.5 py-0.5 font-mono text-xs text-[#545047] dark:border-[#333] dark:text-[#b3b3bb]" x-text="provider.freeLimits"></span>
+                </template>
+                <template x-if="provider.marketingAllowed === false">
+                  <span class="border border-red-600/30 px-1.5 py-0.5 font-mono text-[10px] text-red-700 dark:text-red-400">No marketing</span>
+                </template>
+                <template x-if="provider.marketingAllowed === true">
+                  <span class="border border-green-600/30 px-1.5 py-0.5 font-mono text-[10px] text-green-700 dark:text-green-500">Marketing ✓</span>
+                </template>
+                <template x-if="provider.verificationNeeded === true">
+                  <span class="border border-orange-500/30 px-1.5 py-0.5 font-mono text-[10px] text-orange-600">Verification req.</span>
+                </template>
+                <template x-if="provider.domainLimit !== null">
+                  <span class="border border-orange-500/30 px-1.5 py-0.5 font-mono text-[10px] text-orange-600 dark:text-orange-400" x-text="'Domains: ' + provider.domainLimit"></span>
+                </template>
+              </div>
+            </div>
           </div>
-
-          {/* Free badge */}
-          <div class="flex items-center gap-1">
-            <template x-if="provider.freePlan">
-              <span class="border border-green-600/30 px-1.5 py-0.5 font-mono text-xs text-green-700 dark:border-green-400/30 dark:text-green-400" x-text="provider.freeLimits ? 'Free: ' + provider.freeLimits : 'Free tier'"></span>
-            </template>
-            <template x-if="!provider.freePlan && provider.freeLimits">
-              <span class="border border-[#bdb8ab] px-1.5 py-0.5 font-mono text-xs text-[#545047] dark:border-[#333] dark:text-[#b3b3bb]" x-text="provider.freeLimits"></span>
-            </template>
-          </div>
-
-          {/* Cheapest plan summary */}
-          <div class="font-mono text-sm text-[#45413a] dark:text-[#c4c4cc]">
-            <template x-if="provider.payAsYouGo && provider.plans[0].costPerMonth === 0">
-              <span>PayG · <span x-text="'$' + provider.plans[0].costPerEmail.toFixed(5) + '/mail'"></span></span>
-            </template>
-            <template x-if="!(provider.payAsYouGo && provider.plans[0].costPerMonth === 0)">
-              <span x-text="provider.plans[0].volume.toLocaleString() + ' / $' + provider.plans[0].costPerMonth + '/mo'"></span>
-            </template>
-          </div>
-
-          {/* Tags */}
-          <div class="flex flex-wrap gap-1 ml-auto">
-            <template x-if="provider.marketingAllowed === false">
-              <span class="border border-[#bdb8ab] px-1.5 py-0.5 font-mono text-[10px] text-[#575249] dark:border-[#333] dark:text-[#b3b3bb]">No marketing</span>
-            </template>
-            <template x-if="provider.marketingAllowed === true">
-              <span class="border border-green-600/30 px-1.5 py-0.5 font-mono text-[10px] text-green-700 dark:text-green-500">Marketing ✓</span>
-            </template>
-            <template x-if="provider.verificationNeeded === true">
-              <span class="border border-orange-500/30 px-1.5 py-0.5 font-mono text-[10px] text-orange-600">Verification req.</span>
-            </template>
-            <template x-if="provider.domainLimit !== null">
-              <span class="border border-[#bdb8ab] px-1.5 py-0.5 font-mono text-[10px] text-[#575249] dark:border-[#333] dark:text-[#b3b3bb]" x-text="'Domains: ' + provider.domainLimit"></span>
-            </template>
-          </div>
-
-          {/* Expand chevron */}
-          <span
-            :class="expanded === provider.name ? 'rotate-180 text-[#FFD600]' : 'text-[#45413a] dark:text-[#b6b6be]'"
-            class="ml-1 mt-0.5 shrink-0 font-mono text-sm transition-transform"
-          >▾</span>
 
         </div>
 
@@ -149,29 +144,32 @@
 
             {/* Pricing table */}
             <div>
-              <p class="mb-2 font-mono text-xs tracking-widest text-[#5a4d08] dark:text-[#FFD600]">PRICING TIERS</p>
+              <p class="mb-2 font-mono text-xs tracking-widest text-[#5a4d08] dark:text-[#FFD600]">EMAIL RATE TIERS</p>
               <div class="overflow-x-auto">
                 <table class="w-full border-collapse font-mono text-sm">
                   <thead>
                     <tr class="border-b border-[#e0e0d8] text-[#575249] dark:border-[#222] dark:text-[#b7b7bf]">
-                      <th class="text-left py-1 pr-4">Volume</th>
+                      <th class="text-left py-1 pr-4">Rate / email</th>
+                      <th class="text-left py-1 pr-4">Tier context</th>
                       <th class="text-right py-1 pr-4">Monthly</th>
-                      <th class="text-right py-1 pr-4">Per email</th>
-                      <th class="text-right py-1">Extra / block</th>
+                      <th class="text-right py-1">Extra rate</th>
                     </tr>
                   </thead>
                   <tbody>
                     <template x-for="(plan, i) in provider.plans" :key="i">
-                      <tr class="border-b border-[#f0f0e8] text-[#4a463f] dark:border-[#1e1e22] dark:text-[#bdbdc5]">
-                        <td class="py-1.5 pr-4 text-[#111] dark:text-[#e8e8e0]" x-text="plan.volume.toLocaleString() + ' emails'"></td>
-                        <td class="py-1.5 pr-4 text-right" x-text="plan.costPerMonth === 0 ? 'Pay as you go' : '$' + plan.costPerMonth.toFixed(2)"></td>
-                        <td class="py-1.5 pr-4 text-right text-[#6b5e0a] dark:text-[#FFD600]" x-text="'$' + plan.costPerEmail.toFixed(5)"></td>
+                      <tr
+                        :class="bestPlan(provider).costPerEmail === plan.costPerEmail ? 'bg-[#fff8d6]/55 dark:bg-[#2a250f]/30' : ''"
+                        class="border-b border-[#f0f0e8] text-[#4a463f] dark:border-[#1e1e22] dark:text-[#bdbdc5]"
+                      >
+                        <td class="py-1.5 pr-4 text-[#6b5e0a] dark:text-[#FFD600]" x-text="formatEmailRate(plan.costPerEmail)"></td>
+                        <td class="py-1.5 pr-4 text-[#111] dark:text-[#e8e8e0]" x-text="provider.payAsYouGo && plan.costPerMonth === 0 ? 'Pay as you go' : plan.volume.toLocaleString() + ' emails/mo included'"></td>
+                        <td class="py-1.5 pr-4 text-right" x-text="formatMonthlyCommitment(plan)"></td>
                         <td class="py-1.5 text-right">
                           <template x-if="plan.extra">
-                            <span x-text="'$' + plan.extra.costPerEmail.toFixed(5) + ' / mail'"></span>
+                            <span x-text="formatEmailRate(plan.extra.costPerEmail)"></span>
                           </template>
                           <template x-if="!plan.extra">
-                            <span class="text-[#4a463f] dark:text-[#bdbdc5]">—</span>
+                            <span class="text-[#4a463f] dark:text-[#bdbdc5]">No overage tier</span>
                           </template>
                         </td>
                       </tr>

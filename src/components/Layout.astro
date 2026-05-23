@@ -66,7 +66,7 @@ const { title = 'Transactional Email Providers' } = Astro.props;
             filterNoVerification: false,
 
             // Sort state
-            sortBy: 'name',     // 'name' | 'price' | 'freeQuota'
+            sortBy: 'name',     // 'name' | 'rate' | 'freeQuota'
             sortDir: 'asc',     // 'asc' | 'desc'
 
             // UI state
@@ -109,8 +109,8 @@ const { title = 'Transactional Email Providers' } = Astro.props;
                 let cmp = 0;
                 if (this.sortBy === 'name') {
                   cmp = a.name.localeCompare(b.name);
-                } else if (this.sortBy === 'price') {
-                  cmp = (a.plans[0]?.costPerMonth ?? 0) - (b.plans[0]?.costPerMonth ?? 0);
+                } else if (this.sortBy === 'rate') {
+                  cmp = this.bestPlan(a).costPerEmail - this.bestPlan(b).costPerEmail;
                 } else if (this.sortBy === 'freeQuota') {
                   const aQuota = extractFreeQuota(a);
                   const bQuota = extractFreeQuota(b);
@@ -150,6 +150,30 @@ const { title = 'Transactional Email Providers' } = Astro.props;
 
             toggleExpand(name) {
               this.expanded = this.expanded === name ? null : name;
+            },
+
+            bestPlan(provider) {
+              return provider.plans.reduce((best, plan) => {
+                return plan.costPerEmail < best.costPerEmail ? plan : best;
+              }, provider.plans[0]);
+            },
+
+            formatEmailRate(rate) {
+              if (rate === null || rate === undefined) return '—';
+              return `$${rate.toFixed(5)}/email`;
+            },
+
+            formatTierContext(provider) {
+              const plan = this.bestPlan(provider);
+              if (provider.payAsYouGo && plan.costPerMonth === 0) {
+                return 'pay as you go';
+              }
+              return `best at ${plan.volume.toLocaleString()} emails/mo`;
+            },
+
+            formatMonthlyCommitment(plan) {
+              if (plan.costPerMonth === 0) return 'No monthly fee';
+              return `$${plan.costPerMonth.toFixed(2)}/mo`;
             },
 
             formatCost(amount) {
