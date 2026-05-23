@@ -25,7 +25,7 @@ const locations = ['EU', 'US', 'UK', 'CA', 'Global'];
         <button
           @click={`toggleLocation('${loc}')`}
           :class={`locations.includes('${loc}') ? 'border-[#ffd600] bg-[#ffd600] font-bold text-[#111114]' : 'border-[#b7b3a7] bg-[#fffdf8] text-[#49453d] hover:border-[#b38f00] hover:text-[#2f2c27] dark:border-[#3b3b41] dark:bg-transparent dark:text-[#b8b8bf] dark:hover:border-[#ffd600]/65 dark:hover:text-[#f1f1eb]'`}
-          class="border px-2 py-1 font-mono text-xs transition-colors"
+          class="cursor-pointer border px-2 py-1 font-mono text-xs transition-colors"
         >
           {loc}
         </button>
@@ -45,7 +45,7 @@ const locations = ['EU', 'US', 'UK', 'CA', 'Global'];
           @click="filterFreePlan = !filterFreePlan"
           :aria-checked="filterFreePlan.toString()"
           :class="filterFreePlan ? 'bg-[#FFD600]' : 'bg-[#ddd] dark:bg-[#333]'"
-          class="relative w-8 h-4 rounded-full transition-colors shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FFD600]"
+          class="relative h-4 w-8 shrink-0 cursor-pointer rounded-full transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FFD600]"
         >
           <div
             :class="filterFreePlan ? 'translate-x-4' : 'translate-x-0.5'"
@@ -62,7 +62,7 @@ const locations = ['EU', 'US', 'UK', 'CA', 'Global'];
           @click="filterPayAsYouGo = !filterPayAsYouGo"
           :aria-checked="filterPayAsYouGo.toString()"
           :class="filterPayAsYouGo ? 'bg-[#FFD600]' : 'bg-[#ddd] dark:bg-[#333]'"
-          class="relative w-8 h-4 rounded-full transition-colors shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FFD600]"
+          class="relative h-4 w-8 shrink-0 cursor-pointer rounded-full transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FFD600]"
         >
           <div
             :class="filterPayAsYouGo ? 'translate-x-4' : 'translate-x-0.5'"
@@ -79,7 +79,7 @@ const locations = ['EU', 'US', 'UK', 'CA', 'Global'];
           @click="filterMarketingAllowed = !filterMarketingAllowed"
           :aria-checked="filterMarketingAllowed.toString()"
           :class="filterMarketingAllowed ? 'bg-[#FFD600]' : 'bg-[#ddd] dark:bg-[#333]'"
-          class="relative w-8 h-4 rounded-full transition-colors shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FFD600]"
+          class="relative h-4 w-8 shrink-0 cursor-pointer rounded-full transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FFD600]"
         >
           <div
             :class="filterMarketingAllowed ? 'translate-x-4' : 'translate-x-0.5'"
@@ -96,7 +96,7 @@ const locations = ['EU', 'US', 'UK', 'CA', 'Global'];
           @click="filterNoVerification = !filterNoVerification"
           :aria-checked="filterNoVerification.toString()"
           :class="filterNoVerification ? 'bg-[#FFD600]' : 'bg-[#ddd] dark:bg-[#333]'"
-          class="relative w-8 h-4 rounded-full transition-colors shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FFD600]"
+          class="relative h-4 w-8 shrink-0 cursor-pointer rounded-full transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FFD600]"
         >
           <div
             :class="filterNoVerification ? 'translate-x-4' : 'translate-x-0.5'"
@@ -113,7 +113,7 @@ const locations = ['EU', 'US', 'UK', 'CA', 'Global'];
   <div x-show="hasActiveFilters" style="display: none;">
     <button
       @click="resetFilters()"
-      class="w-full border border-[#b7b3a7] px-3 py-1.5 font-mono text-xs tracking-widest text-[#4e4a42] transition-colors hover:border-[#b38f00] hover:text-[#2c2924] dark:border-[#3b3b41] dark:text-[#b3b3bb] dark:hover:border-[#ffd600]/65 dark:hover:text-[#ffd600]"
+      class="w-full cursor-pointer border border-[#b7b3a7] px-3 py-1.5 font-mono text-xs tracking-widest text-[#4e4a42] transition-colors hover:border-[#b38f00] hover:text-[#2c2924] dark:border-[#3b3b41] dark:text-[#b3b3bb] dark:hover:border-[#ffd600]/65 dark:hover:text-[#ffd600]"
     >
       RESET FILTERS
     </button>

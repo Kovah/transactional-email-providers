@@ -29,7 +29,7 @@ const { lastUpdated } = Astro.props;
       <div x-data="themeToggle" class="relative">
         <button
           @click="toggle"
-          class="flex h-8 w-8 items-center justify-center rounded border border-[#cfcac0] text-[#4f4a43] transition-colors hover:border-[#FFD600] hover:text-[#7a6708] dark:border-[#333] dark:text-[#b9b9c2] dark:hover:text-[#FFD600]"
+          class="flex h-8 w-8 cursor-pointer items-center justify-center rounded border border-[#cfcac0] text-[#4f4a43] transition-colors hover:border-[#FFD600] hover:text-[#7a6708] dark:border-[#333] dark:text-[#b9b9c2] dark:hover:text-[#FFD600]"
           :aria-label="dark ? 'Switch to light mode' : 'Switch to dark mode'"
           :aria-pressed="dark ? 'true' : 'false'"
           :title="dark ? 'Switch to light mode' : 'Switch to dark mode'"

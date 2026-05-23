@@ -21,7 +21,7 @@ const { providers, outOfScope } = Astro.props;
     <span class="font-mono text-sm text-[#464138] dark:text-[#c0c0c8]" x-text="`${filtered.length} / ${allProviders.length} providers`"></span>
     <button
       @click="mobileFiltersOpen = true"
-      class="border border-[#b38f00] px-3 py-1.5 font-mono text-sm text-[#5a4d08] transition-colors hover:bg-[#ffd600]/10 dark:border-[#ffd600]/50 dark:text-[#ffd600]"
+      class="cursor-pointer border border-[#b38f00] px-3 py-1.5 font-mono text-sm text-[#5a4d08] transition-colors hover:bg-[#ffd600]/10 dark:border-[#ffd600]/50 dark:text-[#ffd600]"
     >
       FILTERS <span x-show="hasActiveFilters" class="ml-1">●</span>
     </button>
@@ -57,7 +57,7 @@ const { providers, outOfScope } = Astro.props;
     >
       <div class="flex items-center justify-between border-b border-[#d5d0c5] px-4 py-3 dark:border-[#222]">
         <span class="font-mono text-sm tracking-widest text-[#5a4d08] dark:text-[#ffd600]">FILTERS</span>
-        <button @click="mobileFiltersOpen = false" class="font-mono text-[#4f4b43] hover:text-[#2a2824] dark:text-[#a4a4ad] dark:hover:text-[#ffd600]">✕</button>
+        <button @click="mobileFiltersOpen = false" class="cursor-pointer font-mono text-[#4f4b43] hover:text-[#2a2824] dark:text-[#a4a4ad] dark:hover:text-[#ffd600]">✕</button>
       </div>
       <div class="p-4">
         <slot name="sidebar-mobile" />
