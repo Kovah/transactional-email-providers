@@ -11,6 +11,8 @@ export interface Plan {
   costPerMonth: number;
   /** Cost per single email in USD */
   costPerEmail: number;
+  /** Billing model for this tier; omitted means legacy subscription semantics. */
+  billingModel?: 'subscription' | 'metered' | 'prepaid_bundle';
   /** Overage pricing — null if no overage possible or PAYG */
   extra: PlanExtra | null;
 }

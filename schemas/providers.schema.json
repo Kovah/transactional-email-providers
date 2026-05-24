@@ -70,6 +70,10 @@
                   "type": "number",
                   "minimum": 0
                 },
+                "billingModel": {
+                  "type": "string",
+                  "enum": ["subscription", "metered", "prepaid_bundle"]
+                },
                 "extra": {
                   "oneOf": [
                     {

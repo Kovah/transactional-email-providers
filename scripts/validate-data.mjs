@@ -54,7 +54,7 @@ if (providersData) {
       }
     }
 
-    // Check pay-as-you-go providers have costPerMonth === 0 in first plan
+    // Check pay-as-you-go providers expose at least one non-subscription plan.
     providersData.providers.forEach((provider, index) => {
       // Check URL is parseable http/https URL
       try {
@@ -71,10 +71,19 @@ if (providersData) {
           errors.push(
             `Provider "${provider.name}" (index ${index}): payAsYouGo=true requires at least one plan`
           );
-        } else if (provider.plans[0].costPerMonth !== 0) {
+        } else {
+          const hasPaygLikePlan = provider.plans.some(plan => {
+            if (plan.billingModel === 'metered' || plan.billingModel === 'prepaid_bundle') {
+              return true;
+            }
+            return plan.costPerMonth === 0;
+          });
+
+          if (!hasPaygLikePlan) {
           errors.push(
-            `Provider "${provider.name}" (index ${index}): payAsYouGo=true requires plans[0].costPerMonth === 0, got ${provider.plans[0].costPerMonth}`
+              `Provider "${provider.name}" (index ${index}): payAsYouGo=true requires at least one metered or prepaid bundle plan`
           );
+          }
         }
       }
     });

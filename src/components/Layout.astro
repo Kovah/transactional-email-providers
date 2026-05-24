@@ -179,11 +179,23 @@ const { title = 'Transactional Email Providers' } = Astro.props;
               }, provider.plans[0]);
             },
 
+            planBillingModel(provider, plan) {
+              if (plan.billingModel) return plan.billingModel;
+              if (provider.payAsYouGo && plan.costPerMonth === 0 && !plan.extra) return 'metered';
+              return 'subscription';
+            },
+
             estimatePlanCost(provider, plan, volume) {
               if (volume === null) return plan.costPerMonth;
 
-              if (provider.payAsYouGo && plan.costPerMonth === 0 && !plan.extra) {
+              const billingModel = this.planBillingModel(provider, plan);
+
+              if (billingModel === 'metered') {
                 return volume * plan.costPerEmail;
+              }
+
+              if (billingModel === 'prepaid_bundle') {
+                return volume <= plan.volume ? plan.costPerMonth : Number.POSITIVE_INFINITY;
               }
 
               if (volume <= plan.volume) {
@@ -235,23 +247,36 @@ const { title = 'Transactional Email Providers' } = Astro.props;
 
             formatTierContext(provider) {
               const plan = this.selectedPlan(provider);
+              const billingModel = this.planBillingModel(provider, plan);
               if (this.currentVolumeValue !== null) {
-                if (provider.payAsYouGo && plan.costPerMonth === 0 && !plan.extra) {
+                if (billingModel === 'metered') {
                   return `${this.currentVolumeValue.toLocaleString()}/mo pay as you go`;
+                }
+                if (billingModel === 'prepaid_bundle') {
+                  return `${this.currentVolumeValue.toLocaleString()}/mo from ${plan.volume.toLocaleString()} bundle`;
                 }
                 return `${this.currentVolumeValue.toLocaleString()}/mo on ${plan.volume.toLocaleString()} plan`;
               }
-              if (provider.payAsYouGo && plan.costPerMonth === 0) {
+              if (billingModel === 'metered') {
                 return 'pay as you go';
+              }
+              if (billingModel === 'prepaid_bundle') {
+                return `${plan.volume.toLocaleString()} prepaid emails`;
               }
               return `best at ${plan.volume.toLocaleString()} emails/mo`;
             },
 
             formatPrimaryPrice(provider) {
+              const plan = this.selectedPlan(provider);
+              const billingModel = this.planBillingModel(provider, plan);
               if (this.currentVolumeValue !== null) {
-                return `${this.formatUsd(this.selectedMonthlyCost(provider))}/mo`;
+                const estimatedCost = this.selectedMonthlyCost(provider);
+                if (billingModel === 'prepaid_bundle') {
+                  return `${this.formatUsd(estimatedCost)} bundle`;
+                }
+                return `${this.formatUsd(estimatedCost)}/mo`;
               }
-              return this.formatEmailRate(this.selectedPlan(provider).costPerEmail);
+              return this.formatEmailRate(plan.costPerEmail);
             },
 
             formatSecondaryPrice(provider) {
@@ -262,9 +287,19 @@ const { title = 'Transactional Email Providers' } = Astro.props;
               return this.formatTierContext(provider);
             },
 
-            formatMonthlyCommitment(plan) {
+            formatMonthlyCommitment(plan, provider) {
+              const billingModel = this.planBillingModel(provider, plan);
+              if (billingModel === 'metered') return 'Usage-based';
+              if (billingModel === 'prepaid_bundle') return `${this.formatUsd(plan.costPerMonth)} one-time`;
               if (plan.costPerMonth === 0) return 'No monthly fee';
               return `$${plan.costPerMonth.toFixed(2)}/mo`;
+            },
+
+            formatPlanContext(provider, plan) {
+              const billingModel = this.planBillingModel(provider, plan);
+              if (billingModel === 'metered') return 'Pay as you go';
+              if (billingModel === 'prepaid_bundle') return `${plan.volume.toLocaleString()} prepaid emails`;
+              return `${plan.volume.toLocaleString()} emails/mo included`;
             },
 
             formatCost(amount) {

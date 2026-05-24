@@ -27,7 +27,7 @@
       "location": "US",
       "freePlan": false,
       "freeLimits": null,
-      "payAsYouGo": true,
+      "payAsYouGo": false,
       "plans": [
         {
           "volume": 1000,
@@ -67,7 +67,7 @@
       "location": "EU",
       "freePlan": false,
       "freeLimits": null,
-      "payAsYouGo": true,
+      "payAsYouGo": false,
       "plans": [
         {
           "volume": 100000,
@@ -509,62 +509,84 @@
       "name": "SendPulse",
       "url": "https://sendpulse.com/",
       "location": "US",
-      "freePlan": false,
-      "freeLimits": null,
+      "freePlan": true,
+      "freeLimits": "12,000/mo",
       "payAsYouGo": true,
       "plans": [
+        {
+          "volume": 100000,
+          "costPerMonth": 74.85,
+          "costPerEmail": 0.00075,
+          "billingModel": "subscription",
+          "extra": null
+        },
+        {
+          "volume": 500000,
+          "costPerMonth": 274.85,
+          "costPerEmail": 0.00055,
+          "billingModel": "subscription",
+          "extra": null
+        },
         {
           "volume": 10000,
           "costPerMonth": 15.00,
           "costPerEmail": 0.00150,
+          "billingModel": "prepaid_bundle",
           "extra": null
         },
         {
           "volume": 20000,
           "costPerMonth": 28.00,
           "costPerEmail": 0.00140,
+          "billingModel": "prepaid_bundle",
           "extra": null
         },
         {
           "volume": 50000,
           "costPerMonth": 49.00,
           "costPerEmail": 0.00098,
+          "billingModel": "prepaid_bundle",
           "extra": null
         },
         {
           "volume": 100000,
           "costPerMonth": 89.00,
           "costPerEmail": 0.00089,
+          "billingModel": "prepaid_bundle",
           "extra": null
         },
         {
           "volume": 200000,
           "costPerMonth": 175.00,
           "costPerEmail": 0.00088,
+          "billingModel": "prepaid_bundle",
           "extra": null
         },
         {
           "volume": 300000,
           "costPerMonth": 259.00,
           "costPerEmail": 0.00086,
+          "billingModel": "prepaid_bundle",
           "extra": null
         },
         {
           "volume": 500000,
           "costPerMonth": 419.00,
           "costPerEmail": 0.00084,
+          "billingModel": "prepaid_bundle",
           "extra": null
         },
         {
           "volume": 1000000,
           "costPerMonth": 780.00,
           "costPerEmail": 0.00078,
+          "billingModel": "prepaid_bundle",
           "extra": null
         }
       ],
       "marketingAllowed": null,
       "verificationNeeded": null,
-      "domainLimit": 5,
+      "domainLimit": null,
       "notes": null
     },
     {

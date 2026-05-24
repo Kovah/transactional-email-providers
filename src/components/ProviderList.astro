@@ -171,8 +171,8 @@
                         class="border-b border-[#f0f0e8] text-[#4a463f] dark:border-[#1e1e22] dark:text-[#bdbdc5]"
                       >
                         <td class="py-1.5 pr-4 text-[#6b5e0a] dark:text-[#FFD600]" x-text="formatEmailRate(plan.costPerEmail)"></td>
-                        <td class="py-1.5 pr-4 text-[#111] dark:text-[#e8e8e0]" x-text="provider.payAsYouGo && plan.costPerMonth === 0 ? 'Pay as you go' : plan.volume.toLocaleString() + ' emails/mo included'"></td>
-                        <td class="py-1.5 pr-4 text-right" x-text="formatMonthlyCommitment(plan)"></td>
+                        <td class="py-1.5 pr-4 text-[#111] dark:text-[#e8e8e0]" x-text="formatPlanContext(provider, plan)"></td>
+                        <td class="py-1.5 pr-4 text-right" x-text="formatMonthlyCommitment(plan, provider)"></td>
                         <td class="py-1.5 text-right">
                           <template x-if="plan.extra">
                             <span x-text="formatEmailRate(plan.extra.costPerEmail)"></span>
